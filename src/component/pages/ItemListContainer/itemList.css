@@ -1,0 +1,173 @@
+.todosProductos{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 50px;
+    background-color: rgb(222, 222, 222);
+}
+
+.contenedorProducto{
+    border-radius: 5px;
+    box-shadow: 0px 1px 3px rgb(0, 0, 0, 0.2);
+    width: 80%;
+    padding: 10px;
+    background-color: rgb(255, 255, 255);
+}
+
+.details{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    gap: 8px;
+}
+
+.details h2{
+    margin: 0px;
+    color: rgb(70, 70, 70);
+    font-size: 14px;
+}
+
+.details .titulo{
+    font-size: 18px;
+    margin: 0px;
+    color: rgb(36, 36, 36);
+}
+
+.price{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 2%;
+    padding: 5px;
+}
+
+.price h3{
+    margin: 0px;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.price .precio{
+    width: 100px;
+    background-color: rgb(247, 247, 247);
+    text-align: center;
+}
+
+.sumar{
+    border-bottom: 1px solid rgb(149, 149, 149);
+    font-size: 21px;
+    background-color: rgb(247, 247, 247);
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 130px;
+}
+
+.sumar div{
+    justify-content: flex-end;
+    display: flex;
+    flex-direction: column;
+}
+.sumar div button{
+    background-color: transparent;
+    border: 0px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.sumar h2{
+    margin:0px;
+    padding-left: 5px;
+}
+
+.contenedorSecciones{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    background-color: rgb(222, 222, 222);
+}
+
+.secA{
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+
+}
+.conA{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background-color: rgb(255, 255, 255);
+    padding: 10px;
+    gap: 15px;
+    border-radius: 10px;
+    height: 300px;
+    width: 20vw;
+}
+
+.subT{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: bolder;
+    font-size: 35px;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    margin: 0px;
+    padding: 10px;
+
+}
+
+
+.conBotones{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+}
+
+.subirA{
+    width: 70%;
+    padding: 10px 20px;
+    border: 0px;
+    border-radius: 5px;
+    background-color: rgb(62, 197, 255);
+    color: aliceblue;
+}
+
+.subirA:hover{
+    padding: 10px 20px;
+    border: 0px;
+    border-radius: 5px;
+    background-color: rgb(49, 158, 205);
+    color: aliceblue;
+}
+
+.disabled{
+    width: 70%;
+    padding: 10px 20px;
+    border: 0px;
+    border-radius: 5px;
+    background-color: rgb(183, 233, 255);
+    color: rgb(255, 255, 255);
+}
+
+.custom-icon-size {
+    font-size: 60px; /* Cambia este valor según el tamaño deseado */
+}
+
+.botonDescarga{
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.download{
+    margin-bottom: 25px;
+}
+

@@ -1,0 +1,9 @@
+.fondoFooter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(21, 21, 21);
+    margin: 0px;
+    height: 30vh;
+    padding: 20px;
+}

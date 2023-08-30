@@ -1,0 +1,110 @@
+
+.contenedorImagen{
+    width: 250px;
+    padding-left: 50px;
+}
+
+.contenedorImagen img{
+    width: 100%;
+}
+
+.CIUDAD{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 100; 
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10vh;
+    border-bottom: 10px solid rgb(0, 57, 191);
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.ICBC{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 100; 
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10vh;
+    border-bottom: 10px solid rgb(191, 0, 0);
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.PROVINCIA{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 100; 
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10vh;
+    border-bottom: 10px solid rgb(13, 191, 0);
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.VARIOS{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 100; 
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10vh;
+    border-bottom: 10px solid rgb(20, 168, 205);
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.PROVINCIA img{
+    height: 100px;
+    width: auto;
+}
+
+.nav{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-right: 50px;
+    
+}
+
+.link-reset{
+    color: rgb(102, 102, 102);
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+}
+
+.link-reset:hover{
+    color: rgb(46, 46, 46);
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+}
+
+.select{
+    height: 40px;
+    padding: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 900;
+    color: rgb(46, 46, 46);
+    border: 0px;
+    border-bottom: 3px solid rgb(46, 46, 46);
+    background-color: rgb(242, 242, 242);
+}
+
+
+
+
