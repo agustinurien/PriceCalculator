@@ -6,12 +6,12 @@ import { FuncionesContext } from "../../../context/FuncioinesContext";
 
 
 
-const ItemList = ({ productos, enviarPy }) => {
+const ItemList = ({ productos, enviarPy, toggle }) => {
     const { findPrice } = useContext(FuncionesContext);
 
     const [contadores, setContadores] = useState({});
 
-    const productosXl = []
+    const productosxlsx = []
 
     const recibirPrice = (price, sku, iva, brand, title, costo, category) => {
         const data = {
@@ -23,10 +23,7 @@ const ItemList = ({ productos, enviarPy }) => {
             costo,
             category
         };
-        productosXl.push(data)
-        if (productosXl.length === productos.length) {
-            enviarPy(productosXl)
-        }
+        productosxlsx.push(data)
     }
     const sumar = (sku) => {
         setContadores((prevContadores) => ({
@@ -42,21 +39,30 @@ const ItemList = ({ productos, enviarPy }) => {
         }));
     };
 
+    if (toggle === 1) {
+        productos.forEach((element) => {
+            const productoContador = contadores[element.sku] || 0;
+            const resultado = findPrice(productoContador, element.sku, element.iva);
+            recibirPrice(
+                resultado,
+                element.sku,
+                element.iva,
+                element.brand,
+                element.title,
+                element.costo,
+                element.category
+            );
+        });
+        enviarPy(productosxlsx);
+    }
+
+
     return (
         <section className="todosProductos">
             {
                 productos.map((element) => {
                     const productoContador = contadores[element.sku] || 0;
                     const resultado = findPrice(productoContador, element.sku, element.iva);
-                    recibirPrice(
-                        resultado,
-                        element.sku,
-                        element.iva,
-                        element.brand,
-                        element.title,
-                        element.costo,
-                        element.category
-                    )
 
                     return (
                         <div className="contenedorProducto" key={element.sku}>

@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, send_file
 from openpyxl import load_workbook, Workbook
 from flask_cors import CORS
+import os
 
 app = Flask(__name__)
 CORS(app)  # Esto permite solicitudes CORS desde cualquier origen
@@ -60,9 +61,11 @@ def update_file():
             sheet.append(row_data)
 
         excel_file = 'excel_actualizado.xlsx'
-        workbook.save(excel_file)
+        excel_file_path = os.path.join(os.getcwd(), excel_file)
+        workbook.save(excel_file_path)
 
-        return send_file(excel_file, as_attachment=True)
+        # Send the file to the user
+        return send_file(excel_file_path, as_attachment=True)
     
 
     except Exception as e:
@@ -71,5 +74,3 @@ def update_file():
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000)
-
-

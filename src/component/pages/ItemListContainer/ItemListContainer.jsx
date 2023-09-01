@@ -1,4 +1,4 @@
-
+import { saveAs } from 'file-saver';
 import { useContext, useState } from "react"
 import ItemList from "./ItemList"
 import { FuncionesContext } from "../../../context/FuncioinesContext"
@@ -9,39 +9,34 @@ const ItemListContainer = () => {
     const { handleFileChange, recieveFromPy, productos, selectedFile, numero } = useContext(FuncionesContext);
 
     const [toggle, setToggle] = useState(0)
-    const [dataJsn, setDataJsn] = useState(0)
+
 
     const descargar = () => {
         setToggle(toggle + 1)
     }
 
-    const enviarPy = (productos) => {
-        const jsonPy = JSON.stringify(productos);
-        setDataJsn(jsonPy);
 
+    const enviarPy = (prodx) => {
+        const jsonPy = JSON.stringify(prodx)
         if (toggle === 1) {
             fetch('http://127.0.0.1:5000/update_file', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json', // Indica que estás enviando JSON en el cuerpo
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 },
-                body: jsonPy, // Envía el JSON como cuerpo de la solicitud
-                responseType: 'blob', // Indica que esperas un archivo binario como respuesta
+                body: jsonPy,
             })
-                .then(response => response.blob()) // Convierte la respuesta en un objeto Blob
+                .then(response => response.blob())
                 .then(blobData => {
-                    // Crea un enlace (link) para descargar el archivo
-                    const downloadLink = document.createElement('a');
-                    downloadLink.href = URL.createObjectURL(blobData);
-                    downloadLink.download = 'excel_actualizado.xlsx'; // Nombre del archivo
-                    downloadLink.click(); // Simula un clic en el enlace para descargar
+
+                    saveAs(blobData, 'excel_actualizado.xlsx');
                 })
                 .catch(error => {
                     console.error('Error en la solicitud:', error);
                 });
         }
-        setToggle(0);
-    }
+    };
 
     return (
         <div >
@@ -77,7 +72,7 @@ const ItemListContainer = () => {
                 </div>
 
             </div>
-            <ItemList productos={productos} enviarPy={enviarPy} />
+            <ItemList productos={productos} enviarPy={enviarPy} toggle={toggle} />
         </div>
     );
 }

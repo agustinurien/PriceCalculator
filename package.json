@@ -18,11 +18,13 @@
     "@mui/styled-engine-sc": "^5.12.0",
     "axios": "^1.4.0",
     "cheerio": "^1.0.0-rc.12",
+    "file-saver": "^2.0.5",
     "firebase": "^10.1.0",
     "json-server": "^0.17.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
+    "react-export-excel": "^0.5.3",
     "react-router-dom": "^6.14.2",
     "styled-components": "^5.3.11",
     "xlsx": "^0.18.5"
