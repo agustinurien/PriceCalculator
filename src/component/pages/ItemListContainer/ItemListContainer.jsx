@@ -10,7 +10,6 @@ const ItemListContainer = () => {
 
     const [toggle, setToggle] = useState(0)
 
-
     const descargar = () => {
         setToggle(toggle + 1)
     }
@@ -18,7 +17,7 @@ const ItemListContainer = () => {
 
     const enviarPy = (prodx) => {
         const jsonPy = JSON.stringify(prodx)
-        if (toggle === 1) {
+        if (prodx) {
             fetch('http://127.0.0.1:5000/update_file', {
                 method: 'POST',
                 headers: {
@@ -36,6 +35,7 @@ const ItemListContainer = () => {
                     console.error('Error en la solicitud:', error);
                 });
         }
+
     };
 
     return (
