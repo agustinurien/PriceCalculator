@@ -1,5 +1,5 @@
 import { ArrowDropDown, ArrowDropUp } from "@mui/icons-material"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import "./itemList.css"
 import { FuncionesContext } from "../../../context/FuncioinesContext";
 
@@ -7,7 +7,7 @@ import { FuncionesContext } from "../../../context/FuncioinesContext";
 
 
 const ItemList = ({ productos, enviarPy, toggle }) => {
-    const { findPrice } = useContext(FuncionesContext);
+    const { findPrice, market } = useContext(FuncionesContext);
 
     const [contadores, setContadores] = useState({});
 
@@ -22,6 +22,7 @@ const ItemList = ({ productos, enviarPy, toggle }) => {
             title,
             costo,
             category
+
         };
         productosxlsx.push(data)
     }
@@ -39,22 +40,26 @@ const ItemList = ({ productos, enviarPy, toggle }) => {
         }));
     };
 
-    if (toggle === 1) {
-        productos.forEach((element) => {
-            const productoContador = contadores[element.sku] || 0;
-            const resultado = findPrice(productoContador, element.sku, element.iva);
-            recibirPrice(
-                resultado,
-                element.sku,
-                element.iva,
-                element.brand,
-                element.title,
-                element.costo,
-                element.category
-            );
-        });
-        enviarPy(productosxlsx);
-    }
+    useEffect(() => {
+        if (toggle === 1) {
+            productos.forEach((element) => {
+                const productoContador = contadores[element.sku] || 0;
+                const resultado = findPrice(productoContador, element.sku, element.iva);
+                recibirPrice(
+                    resultado,
+                    element.sku,
+                    element.iva,
+                    element.brand,
+                    element.title,
+                    element.costo,
+                    element.category
+                );
+            });
+
+            enviarPy(productosxlsx);
+        }
+    }, [toggle])
+
 
 
     return (

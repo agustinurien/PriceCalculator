@@ -12,11 +12,14 @@ const ItemListContainer = () => {
 
     const descargar = () => {
         setToggle(toggle + 1)
+
     }
+
 
 
     const enviarPy = (prodx) => {
         const jsonPy = JSON.stringify(prodx)
+
         if (prodx) {
             fetch('http://127.0.0.1:5000/update_file', {
                 method: 'POST',
