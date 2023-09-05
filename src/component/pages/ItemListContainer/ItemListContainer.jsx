@@ -38,7 +38,7 @@ const ItemListContainer = () => {
                     console.error('Error en la solicitud:', error);
                 });
         }
-
+        setToggle(0)
     };
 
     return (
