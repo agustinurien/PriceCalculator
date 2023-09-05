@@ -15,11 +15,9 @@ const ItemListContainer = () => {
 
     }
 
-
-
     const enviarPy = (prodx) => {
         const jsonPy = JSON.stringify(prodx)
-
+        console.log(jsonPy)
         if (prodx) {
             fetch('http://127.0.0.1:5000/update_file', {
                 method: 'POST',

@@ -11,9 +11,12 @@ const ItemList = ({ productos, enviarPy, toggle }) => {
 
     const [contadores, setContadores] = useState({});
 
-    const productosxlsx = []
+    const productosxlsx = {}
 
     const recibirPrice = (price, sku, iva, brand, title, costo, category) => {
+        if (!productosxlsx[market]) {
+            productosxlsx[market] = []
+        }
         const data = {
             price,
             sku,
@@ -24,7 +27,7 @@ const ItemList = ({ productos, enviarPy, toggle }) => {
             category
 
         };
-        productosxlsx.push(data)
+        productosxlsx[market].push(data)
     }
     const sumar = (sku) => {
         setContadores((prevContadores) => ({
