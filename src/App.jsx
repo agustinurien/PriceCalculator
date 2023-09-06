@@ -1,10 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './App.css'
 
-import Layout from "./component/layout/layout";
 import ItemListContainer from "./component/pages/ItemListContainer/ItemListContainer";
 import DatosMarkets from "./component/pages/datosMarkets/DatosMarkets";
 import FuncionesContextProvider from "./context/FuncioinesContext";
+import Layout from "./component/layout/Layout";
 
 
 
