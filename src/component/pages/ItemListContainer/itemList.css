@@ -171,3 +171,27 @@
     margin-bottom: 25px;
 }
 
+.contenedorCheck{
+    display: flex;
+    justify-content: flex-end;
+}
+.check{
+    height: 16px;
+    width: 16px;
+}
+
+.botonesMasivos{
+    display: flex;
+    gap: 10px;
+    padding: 5px;
+}
+.botonesMasivos button{
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 1px 2px 1px rgb(0, 0, 0, 0.2);
+}
+.botonesMasivos button:hover{
+    background-color: rgb(241, 241, 241)
+}
