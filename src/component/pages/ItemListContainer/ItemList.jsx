@@ -12,6 +12,8 @@ const ItemList = ({ productos, enviarPy, toggle }) => {
     const [contadores, setContadores] = useState({});
     const [productosSeleccionados, setProductosSeleccionados] = useState({});
 
+    const [selectAll, setSelectAll] = useState(false);
+
     const productosxlsx = {}
 
     const recibirPrice = (price, sku, iva, brand, title, costo, category) => {
@@ -86,7 +88,17 @@ const ItemList = ({ productos, enviarPy, toggle }) => {
         }
     }, [toggle])
 
+    const toggleSelectAll = () => {
+        setSelectAll(!selectAll);
+        const updatedProductosSeleccionados = {};
 
+        // Si selectAll es verdadero, selecciona todos los productos; de lo contrario, deselecciónalos.
+        productos.forEach((element) => {
+            updatedProductosSeleccionados[element.sku] = !selectAll;
+        });
+
+        setProductosSeleccionados(updatedProductosSeleccionados);
+    };
 
     return (
         <>
@@ -94,8 +106,15 @@ const ItemList = ({ productos, enviarPy, toggle }) => {
             <section className="todosProductos">
                 {productos.length > 0 && (
                     <div className="botonesMasivos">
-                        <button onClick={() => aplicarAccionMasiva("sumar")}>Sumar Seleccionados</button>
-                        <button onClick={() => aplicarAccionMasiva("restar")}>Restar Seleccionados</button>
+                        <div className="contenedorBotones">
+                            <button className={selectAll ? "seleccionar" : "deseleccionar"} onClick={() => toggleSelectAll()}>
+                                {selectAll ? "Deseleccionar Todos" : "Seleccionar Todos"}
+                            </button>
+                            <div className="sumaryrestar">
+                                <button onClick={() => aplicarAccionMasiva("sumar")}>Sumar Seleccionados</button>
+                                <button onClick={() => aplicarAccionMasiva("restar")}>Restar Seleccionados</button>
+                            </div>
+                        </div>
                     </div>
                 )}
 
