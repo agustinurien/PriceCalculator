@@ -29,7 +29,7 @@ const FuncionesContextProvider = ({ children }) => {
 
     const recieveFromPy = async () => {
         if (!selectedFile) {
-            console.log("No se ha seleccionado ningún archivo.");
+
             return;
         }
 
@@ -37,7 +37,7 @@ const FuncionesContextProvider = ({ children }) => {
         const formData = new FormData();
         formData.append('file', selectedFile);
 
-        fetch('http://127.0.0.1:5000/upload', {
+        fetch('https://flask-price-calculator.onrender.com/upload', {
             method: 'POST',
             body: formData
         })
