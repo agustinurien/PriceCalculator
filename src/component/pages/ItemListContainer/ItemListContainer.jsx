@@ -58,7 +58,7 @@ const ItemListContainer = () => {
                 <div className="secA">
                     <div className="conA">
                         <div>
-                            <h2 className="subT">Descaragar los Productos </h2>
+                            <h2 className="subT">Descargar los Productos </h2>
                         </div>
                         <FileDownload className="custom-icon-size download" fontSize="larger" />
                         <div className="botonDescarga">
