@@ -39,6 +39,7 @@ def upload_file():
 
     return jsonify({'error': 'No se ha recibido ningún archivo'})
 
+
 @app.route('/update_file', methods=['POST'])
 def update_file():
     try:
@@ -65,6 +66,34 @@ def update_file():
         workbook.save(excel_file_path)
 
         return send_file(excel_file_path, as_attachment=True)
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/update_file_all', methods=['POST'])
+def update_file_all():
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "No JSON data provided"}), 400
+
+        workbook = Workbook()
+        sheet = workbook.active()
+
+        for market_name, products in data.items():
+            if products:
+                id_columnas = list(products[0].keys())
+                sheet.append(id_columnas)
+                for product in products:
+                    row_data = [product[key] for key in id_columnas]
+                    sheet.append(row_data)
+
+        excel_file_all = 'excel_actualizado.xlsx'
+        excel_file_path_all = os.path.join(os.getcwd(), excel_file_all)
+        workbook.save(excel_file_path_all)
+
+        return send_file(excel_file_path_all, as_attachment=True)
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
