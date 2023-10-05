@@ -7,12 +7,18 @@ import { FuncionesContext } from "../../../context/FuncioinesContext";
 
 
 const ItemList = ({ productos, enviarPy, toggle }) => {
-    const { findPrice, market } = useContext(FuncionesContext);
+    const { findPrice, market, aplicarDecuento, findPriceTodos, findPriceTodosDescuento } = useContext(FuncionesContext);
 
     const [contadores, setContadores] = useState({});
     const [productosSeleccionados, setProductosSeleccionados] = useState({});
 
     const [selectAll, setSelectAll] = useState(false);
+
+    const [value, setValue] = useState("")
+
+    const handleValue = (event) => {
+        setValue(event.target.value);
+    };
 
     const productosxlsx = {}
 
@@ -106,6 +112,11 @@ const ItemList = ({ productos, enviarPy, toggle }) => {
             <section className="todosProductos">
                 {productos.length > 0 && (
                     <div className="botonesMasivos">
+                        <div>
+                            <h2>Agregar Promocion</h2>
+                            <input type="text" onChange={handleValue} />
+                            <button onClick={() => aplicarDecuento(value)}>aplicar</button>
+                        </div>
                         <div className="contenedorBotones">
                             <button className={selectAll ? "seleccionar" : "deseleccionar"} onClick={() => toggleSelectAll()}>
                                 {selectAll ? "Deseleccionar Todos" : "Seleccionar Todos"}
@@ -123,10 +134,15 @@ const ItemList = ({ productos, enviarPy, toggle }) => {
                         const productoContador = contadores[element.sku] || 0;
                         const resultado = findPrice(productoContador, element.sku, element.iva);
 
+                        const resultadoTodos = findPriceTodos(productoContador, element.sku, element.iva);
+
+
+
                         return (
 
                             <div className="contenedorProducto" key={element.sku}>
                                 <div className="contenedorCheck">
+                                    <h2 className="titulo">{element.title}</h2>
                                     <input
                                         type="checkbox"
                                         checked={productosSeleccionados[element.sku] || false}
@@ -134,14 +150,34 @@ const ItemList = ({ productos, enviarPy, toggle }) => {
                                         className="check"
                                     />
                                 </div>
+
                                 <div >
                                     <div className="price">
                                         <div className="precio">
-                                            <h3>${resultado}</h3>
+                                            {
+                                                market !== "TODOS" && (
+                                                    <h3>${resultado}</h3>
+                                                )
+                                            }
+                                            {
+                                                market === "TODOS" && (
+                                                    resultadoTodos.map((element, index) => {
+                                                        return (
+                                                            <div key={index}>
+                                                                <h3 className="preciosColor">${element.precio}</h3>
+                                                                <h5>{element.label}</h5>
+                                                            </div>
+                                                        )
+                                                    })
+
+                                                )
+
+                                            }
+
+
                                         </div>
 
                                         <div className="details">
-                                            <h2 className="titulo">{element.title}</h2>
                                             <h2>{element.sku}</h2>
                                             <h2>{element.brand}</h2>
                                             <h2>{element.category}</h2>
@@ -164,7 +200,7 @@ const ItemList = ({ productos, enviarPy, toggle }) => {
                     })
                 }
 
-            </section>
+            </section >
         </>
     )
 }

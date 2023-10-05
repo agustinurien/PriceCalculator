@@ -43,6 +43,7 @@ const Navbar = () => {
                     <option value="ICBC">ICBC</option>
                     <option value="PROVINCIA">Provincia</option>
                     <option value="VARIOS">Varios</option>
+                    <option value="TODOS">Todos</option>
                 </select>
             </div>
         </div>

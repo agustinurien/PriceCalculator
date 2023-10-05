@@ -22,6 +22,7 @@
     align-items: center;
     font-family: 'Bricolage Grotesque', sans-serif;
     gap: 8px;
+    
 }
 
 .details h2{
@@ -29,10 +30,10 @@
     color: rgb(70, 70, 70);
     font-size: 14px;
 }
-
-.details .titulo{
+.titulo{
     font-size: 18px;
     margin: 0px;
+    padding: 10px;
     color: rgb(36, 36, 36);
 }
 
@@ -45,6 +46,7 @@
 }
 
 .price h3{
+    background-color: rgb(247, 247, 247);
     margin: 0px;
     padding: 20px;
     border-radius: 5px;
@@ -52,10 +54,18 @@
 
 .price .precio{
     width: 100px;
-    background-color: rgb(247, 247, 247);
     text-align: center;
+    display: flex;
+    gap: 10px;
 }
 
+.preciosColor{
+    background-color: rgb(247, 247, 247);
+    
+}
+.label{
+    margin: 0px;
+}
 .sumar{
     border-bottom: 1px solid rgb(149, 149, 149);
     font-size: 21px;
@@ -173,7 +183,8 @@
 
 .contenedorCheck{
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
 }
 .check{
     height: 16px;
@@ -185,7 +196,8 @@
     background-color: rgb(255, 255, 255);
     border-radius: 5px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row-reverse;
+    justify-content: space-around;
     align-items: center;
     gap: 10px;
     padding: 20px;
