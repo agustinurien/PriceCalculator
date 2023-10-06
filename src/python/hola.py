@@ -78,16 +78,24 @@ def update_file_all():
         if not data:
             return jsonify({"error": "No JSON data provided"}), 400
 
+        # Creo un nuevo sheet
         workbook = Workbook()
         sheet = workbook.active()
 
-        for market_name, products in data.items():
-            if products:
-                id_columnas = list(products[0].keys())
-                sheet.append(id_columnas)
-                for product in products:
-                    row_data = [product[key] for key in id_columnas]
-                    sheet.append(row_data)
+        # Asigno la primer fila con id de cada columna
+        column_headers = ['sku', 'iva', 'CIUDAD', 'ICBC',
+                          'PROVINCIA', 'VARIOS', 'brand', 'title', 'category']
+        sheet.append(column_headers)
+
+        for product_data in data:
+            sku, iva, precios, brand, title, category = product_data
+
+            ciudad, icbc, provincia, varios = precios
+
+            row_data = [sku, iva, ciudad, icbc,
+                        provincia, varios, brand, title, category]
+
+            sheet.append(row_data)
 
         excel_file_all = 'excel_actualizado.xlsx'
         excel_file_path_all = os.path.join(os.getcwd(), excel_file_all)
