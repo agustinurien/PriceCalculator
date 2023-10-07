@@ -82,19 +82,16 @@ def update_file_all():
         workbook = Workbook()
         sheet = workbook.active()
 
-        # Asigno la primer fila con id de cada columna
-        column_headers = ['sku', 'iva', 'CIUDAD', 'ICBC',
-                          'PROVINCIA', 'VARIOS', 'brand', 'title', 'category']
+        # Asigno la primer fila con id de las columnas fijas
+        column_headers = ['sku', 'iva', 'brand', 'title', 'category']
         sheet.append(column_headers)
 
-        for product_data in data:
-            sku, iva, precios, brand, title, category = product_data
+        for product in data:
+            row_data = [product['sku'], product['iva'], product['brand'], product['title'], product['category']]
+            variable_markets = {market['name']: market['price'] for market in product['marketplaces']}
 
-            ciudad, icbc, provincia, varios = precios
-
-            row_data = [sku, iva, ciudad, icbc,
-                        provincia, varios, brand, title, category]
-
+            for marketplace_name in column_headers[5:]:
+                row_data.append(variable_markets.get(marketplace_name, "-"))
             sheet.append(row_data)
 
         excel_file_all = 'excel_actualizado.xlsx'
