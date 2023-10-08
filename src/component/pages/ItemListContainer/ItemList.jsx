@@ -6,8 +6,8 @@ import { FuncionesContext } from "../../../context/FuncioinesContext";
 
 
 
-const ItemList = ({ productos, enviarPy, toggle }) => {
-    const { findPrice, market, aplicarDecuento, findPriceTodos, findPriceTodosDescuento } = useContext(FuncionesContext);
+const ItemList = ({ productos, enviarPy, toggle, enviarPyTodos }) => {
+    const { findPrice, market, aplicarDecuento, findPriceTodos } = useContext(FuncionesContext);
 
     const [contadores, setContadores] = useState({});
     const [productosSeleccionados, setProductosSeleccionados] = useState({});
@@ -21,6 +21,8 @@ const ItemList = ({ productos, enviarPy, toggle }) => {
     };
 
     const productosxlsx = {}
+
+    const productosxlsxTodos = []
 
     const recibirPrice = (price, sku, iva, brand, title, costo, category) => {
         if (!productosxlsx[market]) {
@@ -37,6 +39,23 @@ const ItemList = ({ productos, enviarPy, toggle }) => {
 
         };
         productosxlsx[market].push(data)
+    }
+
+    const recibirPriceTodos = (precioXmarket, sku, iva, brand, title, costo, category) => {
+        if (!productosxlsxTodos[market]) {
+            productosxlsxTodos[market] = []
+        }
+        const dataTodos = {
+            sku,
+            iva,
+            brand,
+            title,
+            costo,
+            category,
+            precioXmarket
+
+        };
+        productosxlsxTodos.push(dataTodos)
     }
     const sumar = (sku) => {
         setContadores((prevContadores) => ({
@@ -75,7 +94,7 @@ const ItemList = ({ productos, enviarPy, toggle }) => {
     };
 
     useEffect(() => {
-        if (toggle === 1) {
+        if (toggle === 1 && market !== "TODOS") {
             productos.forEach((element) => {
                 const productoContador = contadores[element.sku] || 0;
                 const resultado = findPrice(productoContador, element.sku, element.iva);
@@ -91,6 +110,26 @@ const ItemList = ({ productos, enviarPy, toggle }) => {
             });
 
             enviarPy(productosxlsx);
+        }
+
+        if (toggle === 1 && market === "TODOS") {
+            productos.forEach((element) => {
+                const productoContador = contadores[element.sku] || 0;
+                const resultado = findPriceTodos(productoContador, element.sku, element.iva);
+
+                recibirPriceTodos(
+                    resultado,
+                    element.sku,
+                    element.iva,
+                    element.brand,
+                    element.title,
+                    element.costo,
+                    element.category
+
+                );
+            });
+
+            enviarPyTodos(productosxlsxTodos);
         }
     }, [toggle])
 
@@ -135,8 +174,10 @@ const ItemList = ({ productos, enviarPy, toggle }) => {
                         const resultado = findPrice(productoContador, element.sku, element.iva);
 
                         const resultadoTodos = findPriceTodos(productoContador, element.sku, element.iva);
-
-
+                        /*
+                        if (value > 0) {
+                            const resultadoTodosDescuento = findPriceTodosDescuento(productoContador, element.sku, element.iva);
+                        }*/
 
                         return (
 
@@ -164,15 +205,15 @@ const ItemList = ({ productos, enviarPy, toggle }) => {
                                                     resultadoTodos.map((element, index) => {
                                                         return (
                                                             <div key={index}>
-                                                                <h3 className="preciosColor">${element.precio}</h3>
-                                                                <h5>{element.label}</h5>
+
+                                                                <h3 className="preciosColor">${element.price}</h3>
+                                                                <h5>{element.name}</h5>
                                                             </div>
                                                         )
                                                     })
-
                                                 )
-
                                             }
+
 
 
                                         </div>

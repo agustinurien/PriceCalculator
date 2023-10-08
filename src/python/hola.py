@@ -69,6 +69,46 @@ def update_file():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+@app.route('/update_file_all', methods=['POST'])
+def update_file_all():
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "No JSON data provided"}), 400
+
+        # Creo un nuevo sheet
+        workbook = Workbook()
+        sheet = workbook.active
+
+        # Asigno la primer fila con id de las columnas fijas
+        column_headers = ['sku', 'iva', 'brand', 'title', 'costo','category']
+        sheet.append(column_headers)
+
+        for product in data:
+            row_data = [
+                product['sku'], 
+                product['iva'], 
+                product['brand'], 
+                product['title'], 
+                product['costo'], 
+                product['category']
+            ]
+            variable_markets = {market['name']: market['price'] for market in product['precioXmarket']}
+
+            for marketplace_name in column_headers[6:]:
+                row_data.append(variable_markets.get(marketplace_name, "-"))
+            sheet.append(row_data)
+
+        excel_file_all = 'excel_all_markets.xlsx'
+        excel_file_path_all = os.path.join(os.getcwd(), excel_file_all)
+        workbook.save(excel_file_path_all)
+
+        return send_file(excel_file_path_all, as_attachment=True)
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 @app.route('/update_file_all', methods=['POST'])
@@ -106,3 +146,4 @@ def update_file_all():
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000)
+

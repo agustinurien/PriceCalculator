@@ -39,6 +39,30 @@ const ItemListContainer = () => {
         setToggle(0)
     };
 
+    const enviarPyTodos = (prodx) => {
+        const jsonPy = JSON.stringify(prodx)
+        console.log(jsonPy)
+        if (prodx) {
+            fetch('https://flask-price-calculator.onrender.com/update_file_all', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                },
+                body: jsonPy,
+            })
+                .then(response => response.blob())
+                .then(blobData => {
+
+                    saveAs(blobData, 'excel_actualizado.xlsx');
+                })
+                .catch(error => {
+                    console.error('Error en la solicitud:', error);
+                });
+        }
+        setToggle(0)
+    };
+
     return (
         <div >
             <div className="contenedorSecciones">
@@ -73,7 +97,7 @@ const ItemListContainer = () => {
                 </div>
 
             </div>
-            <ItemList productos={productos} enviarPy={enviarPy} toggle={toggle} />
+            <ItemList productos={productos} enviarPy={enviarPy} toggle={toggle} enviarPyTodos={enviarPyTodos} />
         </div>
     );
 }
