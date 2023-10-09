@@ -2,6 +2,7 @@ import { ArrowDropDown, ArrowDropUp } from "@mui/icons-material"
 import { useContext, useEffect, useState } from "react"
 import "./itemList.css"
 import { FuncionesContext } from "../../../context/FuncioinesContext";
+import { TextField } from "@mui/material";
 
 
 
@@ -14,17 +15,17 @@ const ItemList = ({ productos, enviarPy, toggle, enviarPyTodos }) => {
         findPriceTodos,
         findPriceTodosDescuento,
         porcentaje,
-        findPriceDescuento } = useContext(FuncionesContext);
+        findPriceDescuento,
+        descargarPromocion } = useContext(FuncionesContext);
 
     const [contadores, setContadores] = useState({});
     const [productosSeleccionados, setProductosSeleccionados] = useState({});
 
     const [selectAll, setSelectAll] = useState(false);
 
-    const [value, setValue] = useState("")
 
     const handleValue = (event) => {
-        setValue(event.target.value);
+        aplicarDecuento(event.target.value)
     };
 
     const productosxlsx = {}
@@ -158,10 +159,11 @@ const ItemList = ({ productos, enviarPy, toggle, enviarPyTodos }) => {
             <section className="todosProductos">
                 {productos.length > 0 && (
                     <div className="botonesMasivos">
-                        <div>
-                            <h2>Agregar Promocion</h2>
-                            <input type="text" onChange={handleValue} />
-                            <button onClick={() => aplicarDecuento(value)}>aplicar</button>
+                        <div className="sectorDescuento">
+                            <TextField className="inputDescuento" label="Promocion" variant="filled" onChange={handleValue} />
+                            <div className="botonesDescuento">
+                                <button onClick={() => descargarPromocion()}>Descargar Promocion</button>
+                            </div>
                         </div>
                         <div className="contenedorBotones">
                             <button className={selectAll ? "seleccionar" : "deseleccionar"} onClick={() => toggleSelectAll()}>

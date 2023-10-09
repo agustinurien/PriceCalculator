@@ -261,3 +261,28 @@
     background-color: rgb(238, 238, 238);
     color: rgb(0, 0, 0);
 }
+
+.sectorDescuento{
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+}
+.sectorDescuento h2{
+    margin: 0px;
+    padding: 6px;
+}
+
+.inputDescuento{
+    width: 100%;
+    border: none;
+    padding-left:7px;
+}
+
+.botonesDescuento{
+    display: flex;
+    gap:10px;
+    width: 100%;
+}

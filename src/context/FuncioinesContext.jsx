@@ -66,6 +66,10 @@ const FuncionesContextProvider = ({ children }) => {
         }
     }
 
+    const descargarPromocion = () => {
+
+    }
+
 
     const findPriceTodosDescuento = (margen, itemSku, iva) => {
         const PreciosTDescuentos = []
@@ -138,7 +142,8 @@ const FuncionesContextProvider = ({ children }) => {
         findPriceTodos,
         findPriceTodosDescuento,
         porcentaje,
-        findPriceDescuento
+        findPriceDescuento,
+        descargarPromocion
 
     };
 
