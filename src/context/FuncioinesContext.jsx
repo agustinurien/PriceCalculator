@@ -24,6 +24,8 @@ const FuncionesContextProvider = ({ children }) => {
 
     const [porcentaje, setPorcentaje] = useState();
 
+
+
     const aplicarDecuento = (porcentaje) => {
         const porcentajeDecimal = (porcentaje / 100)
         setPorcentaje(porcentajeDecimal)
@@ -64,29 +66,13 @@ const FuncionesContextProvider = ({ children }) => {
         }
     }
 
+    const descargarPromocion = () => {
 
-    /*
-        const findPriceTodosDescuento = (margen, itemSku, iva) => {
-    
-            const PreciosTDescuento = []
-    
-            const productoEncontrado = productos.find((producto) => producto.sku === itemSku)
-            if (productoEncontrado) {
-                valoresComisiones.forEach(market => {
-                    const resultado = (productoEncontrado.costo) / (1 - market.value - 0.05 - ((margen / 100) / 0.65)) * iva;
-                    const precioT = (Math.floor(resultado / 100) * 100) - 1;
-    
-                    const precioPromocionT = precioT * (1 + porcentaje)
-                    const precioTRedondeado = (Math.floor(precioPromocionT / 100) * 100)
-                    PreciosTDescuento.push({ price: precioTRedondeado, name: market.label })
-                });
-            }
-            return PreciosTDescuento
-        }*/
+    }
 
-    const findPriceTodos = (margen, itemSku, iva) => {
-        const PreciosT = []
-        const PreciosTDescuento = []
+
+    const findPriceTodosDescuento = (margen, itemSku, iva) => {
+        const PreciosTDescuentos = []
 
         const productoEncontrado = productos.find((producto) => producto.sku === itemSku)
         if (productoEncontrado) {
@@ -94,19 +80,28 @@ const FuncionesContextProvider = ({ children }) => {
                 const resultado = (productoEncontrado.costo) / (1 - market.value - 0.05 - ((margen / 100) / 0.65)) * iva;
                 const precioT = (Math.floor(resultado / 100) * 100) - 1;
 
+                const precioPromocionT = precioT * (1 + porcentaje)
+                const precioTRedondeado = (Math.floor(precioPromocionT / 100) * 100)
+                PreciosTDescuentos.push({ price: precioTRedondeado, name: market.label })
+            });
+        }
+        if (porcentaje > 0) {
+            return PreciosTDescuentos
+        }
+    }
+
+    const findPriceTodos = (margen, itemSku, iva) => {
+        const PreciosT = []
+
+        const productoEncontrado = productos.find((producto) => producto.sku === itemSku)
+        if (productoEncontrado) {
+            valoresComisiones.forEach(market => {
+                const resultado = (productoEncontrado.costo) / (1 - market.value - 0.05 - ((margen / 100) / 0.65)) * iva;
+                const precioT = (Math.floor(resultado / 100) * 100) - 1;
 
                 PreciosT.push({ name: market.label, price: precioT })
 
-                if (porcentaje > 0) {
-                    const precioPromocionT = precioT * (1 + porcentaje)
-                    const precioTRedondeado = (Math.floor(precioPromocionT / 100) * 100)
-                    PreciosTDescuento.push({ price: precioTRedondeado, name: market.label })
-                }
             });
-
-        }
-        if (porcentaje > 0) {
-            return PreciosTDescuento
         }
         return PreciosT
     }
@@ -118,11 +113,19 @@ const FuncionesContextProvider = ({ children }) => {
         if (productoEncontrado) {
             const resultado = (productoEncontrado.costo) / (1 - comision - 0.05 - ((margen / 100) / 0.65)) * iva;
             const roundedPrice = (Math.floor(resultado / 100) * 100) - 1;
+            return roundedPrice
+        }
+    }
+    const findPriceDescuento = (margen, itemSku, iva) => {
+
+        const productoEncontrado = productos.find((producto) => producto.sku === itemSku)
+        if (productoEncontrado) {
+            const resultado = (productoEncontrado.costo) / (1 - comision - 0.05 - ((margen / 100) / 0.65)) * iva;
+            const roundedPrice = (Math.floor(resultado / 100) * 100) - 1;
             const precioPromocion = roundedPrice * (1 + porcentaje)
             if (porcentaje > 0) {
                 return (Math.floor(precioPromocion / 100) * 100)
             }
-            return roundedPrice
         }
     }
 
@@ -137,7 +140,10 @@ const FuncionesContextProvider = ({ children }) => {
         numero,
         aplicarDecuento,
         findPriceTodos,
-
+        findPriceTodosDescuento,
+        porcentaje,
+        findPriceDescuento,
+        descargarPromocion
 
     };
 

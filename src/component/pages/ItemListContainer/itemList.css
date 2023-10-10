@@ -51,18 +51,33 @@
     padding: 20px;
     border-radius: 5px;
 }
+.price .preciosColorTD{
+    margin: 0;
+    
+    color: rgb(27, 27, 27);
+    text-decoration: line-through;
+    text-decoration-color: rgb(255, 0, 0); /* Cambiar el color del tachado */
+    text-decoration-thickness: 1px; /* Cambiar el grosor del tachado */
+}
 
 .price .precio{
-    width: 100px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 10px;
+}
+.price .precio .precioT{
     display: flex;
     gap: 10px;
 }
-
-.preciosColor{
-    background-color: rgb(247, 247, 247);
-    
+.price .precio .precioTD{
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
 }
+
+
 .label{
     margin: 0px;
 }
@@ -245,4 +260,29 @@
 .botonesMasivos .deseleccionar:hover{
     background-color: rgb(238, 238, 238);
     color: rgb(0, 0, 0);
+}
+
+.sectorDescuento{
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+}
+.sectorDescuento h2{
+    margin: 0px;
+    padding: 6px;
+}
+
+.inputDescuento{
+    width: 100%;
+    border: none;
+    padding-left:7px;
+}
+
+.botonesDescuento{
+    display: flex;
+    gap:10px;
+    width: 100%;
 }

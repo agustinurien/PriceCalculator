@@ -2,22 +2,30 @@ import { ArrowDropDown, ArrowDropUp } from "@mui/icons-material"
 import { useContext, useEffect, useState } from "react"
 import "./itemList.css"
 import { FuncionesContext } from "../../../context/FuncioinesContext";
+import { TextField } from "@mui/material";
 
 
 
 
 const ItemList = ({ productos, enviarPy, toggle, enviarPyTodos }) => {
-    const { findPrice, market, aplicarDecuento, findPriceTodos } = useContext(FuncionesContext);
+    const {
+        findPrice,
+        market,
+        aplicarDecuento,
+        findPriceTodos,
+        findPriceTodosDescuento,
+        porcentaje,
+        findPriceDescuento,
+        descargarPromocion } = useContext(FuncionesContext);
 
     const [contadores, setContadores] = useState({});
     const [productosSeleccionados, setProductosSeleccionados] = useState({});
 
     const [selectAll, setSelectAll] = useState(false);
 
-    const [value, setValue] = useState("")
 
     const handleValue = (event) => {
-        setValue(event.target.value);
+        aplicarDecuento(event.target.value)
     };
 
     const productosxlsx = {}
@@ -151,10 +159,11 @@ const ItemList = ({ productos, enviarPy, toggle, enviarPyTodos }) => {
             <section className="todosProductos">
                 {productos.length > 0 && (
                     <div className="botonesMasivos">
-                        <div>
-                            <h2>Agregar Promocion</h2>
-                            <input type="text" onChange={handleValue} />
-                            <button onClick={() => aplicarDecuento(value)}>aplicar</button>
+                        <div className="sectorDescuento">
+                            <TextField className="inputDescuento" label="Promocion" variant="filled" onChange={handleValue} />
+                            <div className="botonesDescuento">
+                                <button onClick={() => descargarPromocion()}>Descargar Promocion</button>
+                            </div>
                         </div>
                         <div className="contenedorBotones">
                             <button className={selectAll ? "seleccionar" : "deseleccionar"} onClick={() => toggleSelectAll()}>
@@ -172,15 +181,12 @@ const ItemList = ({ productos, enviarPy, toggle, enviarPyTodos }) => {
                     productos.map((element) => {
                         const productoContador = contadores[element.sku] || 0;
                         const resultado = findPrice(productoContador, element.sku, element.iva);
+                        const resultadoDescuento = findPriceDescuento(productoContador, element.sku, element.iva);
 
                         const resultadoTodos = findPriceTodos(productoContador, element.sku, element.iva);
-                        /*
-                        if (value > 0) {
-                            const resultadoTodosDescuento = findPriceTodosDescuento(productoContador, element.sku, element.iva);
-                        }*/
+                        const resultadoTodosDescuento = findPriceTodosDescuento(productoContador, element.sku, element.iva);
 
                         return (
-
                             <div className="contenedorProducto" key={element.sku}>
                                 <div className="contenedorCheck">
                                     <h2 className="titulo">{element.title}</h2>
@@ -195,27 +201,50 @@ const ItemList = ({ productos, enviarPy, toggle, enviarPyTodos }) => {
                                 <div >
                                     <div className="price">
                                         <div className="precio">
-                                            {
-                                                market !== "TODOS" && (
-                                                    <h3>${resultado}</h3>
-                                                )
-                                            }
-                                            {
-                                                market === "TODOS" && (
-                                                    resultadoTodos.map((element, index) => {
-                                                        return (
-                                                            <div key={index}>
+                                            <div className="precioTD">
+                                                {
+                                                    porcentaje > 0 && market === "TODOS" && (
+                                                        resultadoTodosDescuento.map((element, index) => {
+                                                            return (
+                                                                <div key={index}>
+                                                                    <h4 className="preciosColorTD">${element.price}</h4>
+                                                                </div>
+                                                            )
+                                                        })
+                                                    )
+                                                }
+                                            </div>
 
-                                                                <h3 className="preciosColor">${element.price}</h3>
-                                                                <h5>{element.name}</h5>
-                                                            </div>
-                                                        )
-                                                    })
-                                                )
-                                            }
+                                            <div>
+                                                {
+                                                    porcentaje > 0 && market !== "TODOS" && (
+                                                        <h4 className="preciosColorTD">${resultadoDescuento}</h4>
+                                                    )
+                                                }
+                                            </div>
+                                            <div>
+                                                {
+                                                    market !== "TODOS" && (
+                                                        <h3>${resultado}</h3>
+                                                    )
+                                                }
+                                            </div>
 
 
-
+                                            <div className="precioT">
+                                                {
+                                                    market === "TODOS" && (
+                                                        resultadoTodos.map((element, index) => {
+                                                            return (
+                                                                <div key={index}>
+                                                                    <h3>${element.price}</h3>
+                                                                    <h5>{element.name}</h5>
+                                                                </div>
+                                                            )
+                                                        })
+                                                    )
+                                                }
+                                            </div>
                                         </div>
 
                                         <div className="details">
