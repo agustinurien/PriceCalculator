@@ -8,10 +8,16 @@ import { Description, FileDownload } from "@mui/icons-material";
 const ItemListContainer = () => {
     const { handleFileChange, recieveFromPy, productos, selectedFile, numero } = useContext(FuncionesContext);
 
+    const [toggleDescuento, setToggleDescuento] = useState(0);
+
     const [toggle, setToggle] = useState(0)
 
     const descargar = () => {
         setToggle(toggle + 1)
+
+    }
+    const descargarDescuento = () => {
+        setToggleDescuento(toggleDescuento + 1)
 
     }
 
@@ -63,6 +69,18 @@ const ItemListContainer = () => {
         setToggle(0)
     };
 
+    const enviarPyD = (prodx) => {
+        const jsonPy = JSON.stringify(prodx)
+        console.log(jsonPy)
+        setToggleDescuento(0)
+    };
+
+    const enviarPyTodosD = (prodx) => {
+        const jsonPy = JSON.stringify(prodx)
+        console.log(jsonPy)
+        setToggleDescuento(0)
+    };
+
     return (
         <div >
             <div className="contenedorSecciones">
@@ -97,7 +115,15 @@ const ItemListContainer = () => {
                 </div>
 
             </div>
-            <ItemList productos={productos} enviarPy={enviarPy} toggle={toggle} enviarPyTodos={enviarPyTodos} />
+            <ItemList
+                productos={productos}
+                enviarPy={enviarPy}
+                toggle={toggle}
+                enviarPyTodos={enviarPyTodos}
+                enviarPyTodosD={enviarPyTodosD}
+                enviarPyD={enviarPyD}
+                toggleDescuento={toggleDescuento}
+                descargarDescuento={descargarDescuento} />
         </div>
     );
 }
