@@ -97,8 +97,6 @@ const ItemList = ({ productos, enviarPy, toggle, enviarPyTodos, enviarPyD, envia
         productosxlsxTodosD.push(dataTodosD)
     }
 
-
-
     const sumar = (sku) => {
         setContadores((prevContadores) => ({
             ...prevContadores,
@@ -238,7 +236,10 @@ const ItemList = ({ productos, enviarPy, toggle, enviarPyTodos, enviarPyD, envia
                         <div className="sectorDescuento">
                             <TextField className="inputDescuento" label="Promocion" variant="filled" onChange={handleValue} />
                             <div className="botonesDescuento">
-                                <button onClick={() => descargarDescuento()}>Descargar Promocion</button>
+                                <button
+                                    className={value == 0 && "descargarDescuentoDisabled"}
+                                    disabled={value == 0}
+                                    onClick={() => descargarDescuento()}>Descargar Promocion</button>
                             </div>
                         </div>
                         <div className="contenedorBotones">

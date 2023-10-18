@@ -138,7 +138,8 @@ const FuncionesContextProvider = ({ children }) => {
         findPriceTodos,
         findPriceTodosDescuento,
         porcentaje,
-        findPriceDescuento
+        findPriceDescuento,
+        valoresComisiones
 
 
     };

@@ -1,0 +1,167 @@
+.fondoNegro{
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.4);
+    top:0;
+    right: 0;
+    bottom: 0;
+    height: 100vh;
+    width: 100vw;
+}
+
+.sideBar{
+    position: absolute;
+    background-color: #ffffff;
+    top:0;
+    right: 0;
+    bottom: 0;
+    height: 100vh;
+}
+
+.noSideBar{
+    display: none;
+}
+
+.itemsConfig{
+    margin-top: 30px;
+}
+
+.display0{
+    display: none;
+}
+
+.contenedorConfiguracion{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-image: linear-gradient(to bottom, #366D9A ,#152D49);
+}
+.contenedorConfiguracion h2{
+    padding-left: 10px;
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+}
+
+.contenedorConfiguracion .cross{
+    font-size: 20px;
+    color: white;
+}
+
+.topic{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: end;
+    padding: 10px;
+    border: 0px;
+    border-bottom: 1px solid #f1f1f1;
+}
+.topic h3{
+    margin:0px;
+    padding-left: 10px;
+}
+
+.detalles{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #f0f0f0;
+    padding: 10px;
+}
+.detalles h4{
+    width: fit-content;
+    margin: 0px;
+    padding: 5px;
+}
+
+.rotate{
+    rotate: 90deg;
+}
+
+.comisiones{
+    display: flex;
+    justify-content: space-between;
+}
+
+.seccionAgregar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    padding-bottom: 20px;
+    background-color: #f0f0f0;
+    height: 20px;
+}
+
+.agregar{
+    display:flex;
+    align-items: center;
+    height: 30px;
+    border: 1px solid transparent;
+    background-color:  #dfdfdf;
+    border-radius: 5px;
+    padding: 7px;
+    font-size: 12px;
+}
+.agregar:hover{
+    background-color:  #d8d8d8;
+    border: 1px solid transparent;
+}
+.agregar .add{
+    font-size: 16px;
+}
+
+.editar{
+    border: 0px;
+}
+.editar .edit{
+    color: rgb(48, 48, 48);
+    font-size: 17px;
+}
+
+.mkpEdit{
+    display: flex;
+    align-items: center;
+}
+
+.botonEliminar{
+    border-radius: 100%;
+    border: none;
+}
+.botonEliminar:hover{
+    color: red;
+}
+
+.botonDone{
+    border: none;
+    font-size: 20px;
+    color:  #414141;
+}
+.botonCancelar{
+    display:flex;
+    align-items: center;
+    height: 30px;
+    border: 1px solid transparent;
+    background-color:  #dfdfdf;
+    border-radius: 5px;
+    padding: 7px;
+    font-size: 12px;
+}
+.botonCancelar:hover{
+    background-color:  #adadad;
+
+}
+
+.botonDone:hover{
+    color:  #208313;
+}
+
+.inputComision{
+    width: 80px;
+    background-color: #dddddd;
+    border: 0px;
+    border-bottom: 2px solid rgb(59, 59, 59);
+}

@@ -262,6 +262,7 @@
     color: rgb(0, 0, 0);
 }
 
+
 .sectorDescuento{
     width: 300px;
     display: flex;
@@ -283,6 +284,9 @@
 
 .botonesDescuento{
     display: flex;
-    gap:10px;
     width: 100%;
+}
+
+.botonesDescuento .descargarDescuentoDisabled:hover{
+    background-color: rgb(248, 248, 248);
 }

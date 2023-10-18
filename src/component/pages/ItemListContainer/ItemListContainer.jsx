@@ -47,7 +47,6 @@ const ItemListContainer = () => {
 
     const enviarPyTodos = (prodx) => {
         const jsonPy = JSON.stringify(prodx)
-        console.log(jsonPy)
         if (prodx) {
             fetch('https://flask-price-calculator.onrender.com/update_file_all', {
                 method: 'POST',
@@ -71,13 +70,47 @@ const ItemListContainer = () => {
 
     const enviarPyD = (prodx) => {
         const jsonPy = JSON.stringify(prodx)
-        console.log(jsonPy)
+        if (prodx) {
+            fetch('https://flask-price-calculator.onrender.com/update_file_all_discount', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                },
+                body: jsonPy,
+            })
+                .then(response => response.blob())
+                .then(blobData => {
+
+                    saveAs(blobData, 'excel_actualizado.xlsx');
+                })
+                .catch(error => {
+                    console.error('Error en la solicitud:', error);
+                });
+        }
         setToggleDescuento(0)
     };
 
     const enviarPyTodosD = (prodx) => {
         const jsonPy = JSON.stringify(prodx)
-        console.log(jsonPy)
+        if (prodx) {
+            fetch('https://flask-price-calculator.onrender.com/update_file_all_discount', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                },
+                body: jsonPy,
+            })
+                .then(response => response.blob())
+                .then(blobData => {
+
+                    saveAs(blobData, 'excel_actualizado.xlsx');
+                })
+                .catch(error => {
+                    console.error('Error en la solicitud:', error);
+                });
+        }
         setToggleDescuento(0)
     };
 
