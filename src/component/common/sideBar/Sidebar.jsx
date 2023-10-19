@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { FuncionesContext } from "../../../context/FuncioinesContext";
 import { useState } from "react";
-import { Add, CheckCircle, CheckCircleOutline, Close, Create, Done, KeyboardArrowRight, RemoveCircleOutline } from "@mui/icons-material"
+import { Add, CheckCircleOutline, Close, Create, KeyboardArrowRight, RemoveCircleOutline } from "@mui/icons-material"
 import { motion } from "framer-motion"
 import "./sidebar.css"
 
@@ -15,7 +15,6 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
 
     const [editar, setEditar] = useState(false)
 
-
     const [desplegar, setDesplegar] = useState({
         markets: false,
         costoEnvio: false,
@@ -28,6 +27,42 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
             [topic]: !prevDesplegar[topic],
         }))
     }
+
+    const [inputValues, setInputValues] = useState(valoresComisiones.map((element => element.value * 100)))
+
+    const [selectedMarkets, setSelectedMarkets] = useState([])
+    console.log(selectedMarkets)
+
+    const handleInputChange = (index, newValue) => {
+        const numberValue = parseFloat(newValue);
+
+        const newInputValues = [...inputValues];
+        newInputValues[index] = numberValue;
+        setInputValues(newInputValues);
+    };
+
+    const cancelarChangeValue = () => {
+        const valoresOriginales = valoresComisiones.map((element => element.value * 100))
+        setInputValues(valoresOriginales)
+    }
+    const changeValue = () => {
+        console.log(inputValues) // hacer un push para cambiar los datos, le paso un numero entero, deberia dividirlo en 100
+    }
+
+    const toggleEliminar = (marketLabel) => {
+        const marketEncontrado = selectedMarkets.find((element) => element === marketLabel)
+
+        if (marketEncontrado !== undefined) {
+            const nuevoArray = selectedMarkets.filter((element) => element !== marketEncontrado);
+            setSelectedMarkets(nuevoArray);
+        }
+        if (!marketEncontrado) {
+            setSelectedMarkets([...selectedMarkets, marketLabel]);
+        }
+    }
+
+
+
     return (
         <>
             {
@@ -59,46 +94,52 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
                                     {
                                         valoresComisiones.map((element, index) => {
                                             const delay = 0.1 * index;
+                                            const isSelected = selectedMarkets.includes(element.label)
                                             return (
-
-                                                <motion.div
-
-                                                    key={element.label}
-                                                    initial={{ height: 0 }}
-                                                    animate={{ height: "auto" }}
-                                                    exit={{ height: 0, }}
-                                                    transition={{ duration: 0.2 }}
-                                                    className="detalles">
-                                                    <div className="comisiones gay">
-                                                        <div className="mkpEdit">
-                                                            {
-                                                                editar && (
-                                                                    <motion.button
-                                                                        className="botonEliminar"><RemoveCircleOutline fontSize="inherit" /></motion.button>
-                                                                )
-                                                            }
-                                                            <motion.h4
-                                                                initial={{ opacity: 0 }}
-                                                                animate={{ opacity: 1 }}
-                                                                transition={{ duration: 0.3, delay: delay + 0.1 }}
-                                                            >{element.label}</motion.h4>
-                                                        </div>
-                                                        {
-                                                            editar === false ? (
+                                                <div key={element.label} className={isSelected ? "botonEliminarComisionesRojo" : "botonEliminarComisiones"}>
+                                                    {
+                                                        editar && (
+                                                            <motion.button
+                                                                onClick={() => toggleEliminar(element.label)}
+                                                                className="botonEliminar"><RemoveCircleOutline fontSize="inherit" /></motion.button>
+                                                        )
+                                                    }
+                                                    <motion.div
+                                                        initial={{ height: 0 }}
+                                                        animate={{ height: "auto" }}
+                                                        exit={{ height: 0, }}
+                                                        transition={{ duration: 0.2 }}
+                                                        className="detalles">
+                                                        <div className="comisiones">
+                                                            <div className="mkpEdit">
                                                                 <motion.h4
                                                                     initial={{ opacity: 0 }}
                                                                     animate={{ opacity: 1 }}
-                                                                    transition={{ duration: 0.3, delay: delay + 0.2 }}
-                                                                >${element.value}</motion.h4>
-                                                            ) : (
-                                                                <input type="text" className="inputComision" value={element.value} />
+                                                                    transition={{ duration: 0.3, delay: delay + 0.1 }}
+                                                                >{element.label}</motion.h4>
+                                                            </div>
+                                                            {
+                                                                editar === false ? (
+                                                                    <motion.h4
+                                                                        initial={{ opacity: 0 }}
+                                                                        animate={{ opacity: 1 }}
+                                                                        transition={{ duration: 0.3, delay: delay + 0.2 }}
+                                                                    >%{element.value * 100}</motion.h4>
+                                                                ) : (
+                                                                    <input
+                                                                        type="number"
+                                                                        className="inputComision"
+                                                                        value={inputValues[index]}
+                                                                        onChange={(e) => handleInputChange(index, e.target.value)}
+                                                                    />
 
-                                                            )
-                                                        }
+                                                                )
+                                                            }
 
-                                                    </div>
-                                                </motion.div>
+                                                        </div>
+                                                    </motion.div>
 
+                                                </div>
                                             )
                                         })
                                     }
@@ -111,10 +152,10 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
                                                 <>
                                                     <button
                                                         className="botonCancelar"
-                                                        onClick={() => setEditar(!editar)}>CANCELAR</button>
+                                                        onClick={() => (setEditar(!editar), cancelarChangeValue(), setSelectedMarkets([]))}>CANCELAR</button>
                                                     <button
                                                         className="botonDone"
-                                                        onClick={() => setEditar(!editar)}><CheckCircleOutline className="check" fontSize="inherit" /></button>
+                                                        onClick={() => (setEditar(!editar), changeValue())}><CheckCircleOutline className="check" fontSize="inherit" /></button>
                                                 </>
                                             )
                                         }

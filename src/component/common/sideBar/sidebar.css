@@ -65,10 +65,19 @@
 }
 
 .detalles{
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 20px;
     background-color: #f0f0f0;
+    padding: 10px;
+}
+.detallesEdit{
+    
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #ff7575;
     padding: 10px;
 }
 .detalles h4{
@@ -128,12 +137,11 @@
 }
 
 .botonEliminar{
-    border-radius: 100%;
+    width: 50px;
+    background-color:transparent;
     border: none;
 }
-.botonEliminar:hover{
-    color: red;
-}
+
 
 .botonDone{
     border: none;
@@ -164,4 +172,15 @@
     background-color: #dddddd;
     border: 0px;
     border-bottom: 2px solid rgb(59, 59, 59);
+}
+
+.botonEliminarComisiones{
+    background-color:  #f0f0f0 ;
+    display: flex;
+    justify-content: space-between;
+}
+.botonEliminarComisionesRojo{
+    background-color:#ff7575;
+    display: flex;
+    justify-content: space-between;
 }
