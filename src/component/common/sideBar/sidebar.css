@@ -72,6 +72,10 @@
     background-color: #f0f0f0;
     padding: 10px;
 }
+.detallesRojo{
+    background-color: #F2D1D3;
+    padding: 10px;
+}
 .detallesEdit{
     
     display: flex;
@@ -95,7 +99,8 @@
     justify-content: space-between;
 }
 
-.seccionAgregar{
+
+.seccionEditar{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -103,6 +108,34 @@
     padding-bottom: 20px;
     background-color: #f0f0f0;
     height: 20px;
+}
+.seccionAgregar{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #f0f0f0;
+    height: fit-content;
+    gap: 10px;
+}
+
+.inputsAgregar{
+    padding: 0px 10px;
+    padding-left: 13px;
+    display: flex;
+    justify-content: space-between;
+    height: 30px;
+}
+
+.campoMkp{
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid rgb(114, 114, 114);
+}
+.campoComision{
+    width: 50px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid rgb(114, 114, 114);
 }
 
 .agregar{
@@ -172,6 +205,11 @@
     background-color: #dddddd;
     border: 0px;
     border-bottom: 2px solid rgb(59, 59, 59);
+}
+
+.comisionRojo{
+    background-color: #D7B6B8;
+    border-bottom: 2px solid #573738;
 }
 
 .botonEliminarComisiones{

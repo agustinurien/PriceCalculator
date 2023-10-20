@@ -15,6 +15,8 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
 
     const [editar, setEditar] = useState(false)
 
+    const [agregar, setAgregar] = useState(false)
+
     const [desplegar, setDesplegar] = useState({
         markets: false,
         costoEnvio: false,
@@ -47,6 +49,17 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
     }
     const changeValue = () => {
         console.log(inputValues) // hacer un push para cambiar los datos, le paso un numero entero, deberia dividirlo en 100
+    }
+
+    const sendValue = (valueMkp, valuePorcentaje) => {
+        console.log(valueMkp)
+        console.log(valuePorcentaje)
+
+        // enviar esta info a un array
+    }
+    const agregarMarket = () => {
+        // aca va el array que se forma en sendValue
+        // enviar esta info a la base de datos
     }
 
     const toggleEliminar = (marketLabel) => {
@@ -109,7 +122,7 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
                                                         animate={{ height: "auto" }}
                                                         exit={{ height: 0, }}
                                                         transition={{ duration: 0.2 }}
-                                                        className="detalles">
+                                                        className={isSelected ? "detalles detallesRojo" : "detalles"}>
                                                         <div className="comisiones">
                                                             <div className="mkpEdit">
                                                                 <motion.h4
@@ -128,7 +141,7 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
                                                                 ) : (
                                                                     <input
                                                                         type="number"
-                                                                        className="inputComision"
+                                                                        className={isSelected ? "inputComision comisionRojo" : "inputComision"}
                                                                         value={inputValues[index]}
                                                                         onChange={(e) => handleInputChange(index, e.target.value)}
                                                                     />
@@ -146,9 +159,31 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
 
 
                                     <section
-                                        className="seccionAgregar">
+                                        className={agregar ? "seccionAgregar" : "seccionEditar"}>
                                         {
-                                            editar === true && (
+                                            agregar && (
+                                                <>
+                                                    <div className="inputsAgregar">
+                                                        <input
+                                                            onChange={(e) => sendValue(e.target.value, e.target.value)}
+                                                            className="campoMkp" type="text" name="" id="" placeholder="MARKET..." />
+                                                        <input
+                                                            onChange={(e) => sendValue(e.target.value, e.target.value)}
+                                                            className="campoComision" type="text" name="" id="" placeholder="%" />
+                                                    </div>
+                                                    <div className="seccionEditar">
+                                                        <button
+                                                            className="botonCancelar"
+                                                            onClick={() => setAgregar(false)}>CANCELAR</button>
+                                                        <button
+                                                            className="botonDone"
+                                                            onClick={() => (setAgregar(false), agregarMarket())}><CheckCircleOutline className="check" fontSize="inherit" /></button>
+                                                    </div>
+                                                </>
+                                            )
+                                        }
+                                        {
+                                            editar && (
                                                 <>
                                                     <button
                                                         className="botonCancelar"
@@ -160,12 +195,13 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
                                             )
                                         }
                                         {
-                                            editar === false && (
+                                            editar || agregar === false && (
                                                 <>
                                                     <motion.button
                                                         initial={{ opacity: 0 }}
                                                         animate={{ opacity: 1 }}
                                                         transition={{ duration: 0.3, delay: 0.5 }}
+                                                        onClick={() => setAgregar(true)}
                                                         className="agregar"> <Add className="add" fontSize="inherit" />AGREGAR</motion.button>
                                                     <motion.button
                                                         onClick={() => setEditar(!editar)}
@@ -221,7 +257,7 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
                                             transition={{ duration: 0.3, delay: 0.3 }}
                                             className="agregar"> <Add className="add" fontSize="inherit" />AGREGAR</motion.button>
                                         <motion.button
-                                            onClick={() => setEditar()}
+                                            onClick={() => setEditar(!editar)}
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
                                             transition={{ duration: 0.3, delay: 0.3 }}
