@@ -7,7 +7,7 @@ import { TextField } from "@mui/material";
 
 
 
-const ItemList = ({ productos, enviarPy, toggle, enviarPyTodos }) => {
+const ItemList = ({ productos, enviarPy, toggle, enviarPyTodos, enviarPyD, enviarPyTodosD, toggleDescuento, descargarDescuento }) => {
     const {
         findPrice,
         market,
@@ -15,21 +15,21 @@ const ItemList = ({ productos, enviarPy, toggle, enviarPyTodos }) => {
         findPriceTodos,
         findPriceTodosDescuento,
         porcentaje,
-        findPriceDescuento,
-        descargarPromocion } = useContext(FuncionesContext);
+        findPriceDescuento } = useContext(FuncionesContext);
 
     const [contadores, setContadores] = useState({});
     const [productosSeleccionados, setProductosSeleccionados] = useState({});
 
     const [selectAll, setSelectAll] = useState(false);
 
+    const [value, setValue] = useState(0);
 
     const handleValue = (event) => {
         aplicarDecuento(event.target.value)
+        setValue(event.target.value)
     };
 
     const productosxlsx = {}
-
     const productosxlsxTodos = []
 
     const recibirPrice = (price, sku, iva, brand, title, costo, category) => {
@@ -65,6 +65,38 @@ const ItemList = ({ productos, enviarPy, toggle, enviarPyTodos }) => {
         };
         productosxlsxTodos.push(dataTodos)
     }
+
+    const productosxlsxD = {}
+    const productosxlsxTodosD = []
+
+    const recibirPriceDescuento = (descuento, producto, marca, sku, precio, precioD) => {
+        if (!productosxlsxD[market]) {
+            productosxlsxD[market] = []
+        }
+        const dataD = {
+            descuento,
+            producto,
+            marca,
+            sku,
+            precio,
+            precioD
+        };
+        productosxlsxD[market].push(dataD)
+    }
+    const recibirPriceTodosDescuento = (descuento, producto, marca, sku, precios) => {
+        if (!productosxlsxTodosD[market]) {
+            productosxlsxTodosD[market] = []
+        }
+        const dataTodosD = {
+            descuento,
+            producto,
+            marca,
+            sku,
+            precios
+        };
+        productosxlsxTodosD.push(dataTodosD)
+    }
+
     const sumar = (sku) => {
         setContadores((prevContadores) => ({
             ...prevContadores,
@@ -100,6 +132,48 @@ const ItemList = ({ productos, enviarPy, toggle, enviarPyTodos }) => {
             }
         });
     };
+
+
+
+    useEffect(() => {
+        if (toggleDescuento === 1 && market !== "TODOS") {
+            productos.forEach((element) => {
+                const productoContador = contadores[element.sku] || 0;
+                const resultado = findPrice(productoContador, element.sku, element.iva);
+                const resultadoDescuento = findPriceDescuento(productoContador, element.sku, element.iva);
+                recibirPriceDescuento(
+                    value,
+                    element.title,
+                    element.brand,
+                    element.sku,
+                    resultado,
+                    resultadoDescuento
+                );
+            });
+
+            enviarPyD(productosxlsxD);
+
+        }
+
+        if (toggleDescuento === 1 && market === "TODOS") {
+            productos.forEach((element) => {
+                const productoContador = contadores[element.sku] || 0;
+                const resultadoTodosDescuento = findPriceTodosDescuento(productoContador, element.sku, element.iva);
+
+                recibirPriceTodosDescuento(
+                    value,
+                    element.title,
+                    element.brand,
+                    element.sku,
+                    resultadoTodosDescuento
+                );
+            });
+
+            enviarPyTodosD(productosxlsxTodosD);
+
+        }
+    }, [toggleDescuento])
+
 
     useEffect(() => {
         if (toggle === 1 && market !== "TODOS") {
@@ -162,7 +236,10 @@ const ItemList = ({ productos, enviarPy, toggle, enviarPyTodos }) => {
                         <div className="sectorDescuento">
                             <TextField className="inputDescuento" label="Promocion" variant="filled" onChange={handleValue} />
                             <div className="botonesDescuento">
-                                <button onClick={() => descargarPromocion()}>Descargar Promocion</button>
+                                <button
+                                    className={value == 0 && "descargarDescuentoDisabled"}
+                                    disabled={value == 0}
+                                    onClick={() => descargarDescuento()}>Descargar Promocion</button>
                             </div>
                         </div>
                         <div className="contenedorBotones">

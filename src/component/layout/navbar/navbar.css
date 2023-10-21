@@ -105,6 +105,15 @@
     background-color: rgb(242, 242, 242);
 }
 
+.settingsButton{
+    background-color: transparent;
+    border: 0px;
+}
+.settings{
+    color: #152D49;
+    font-size: 30px;
+}
+
 
 
 

@@ -66,10 +66,6 @@ const FuncionesContextProvider = ({ children }) => {
         }
     }
 
-    const descargarPromocion = () => {
-
-    }
-
 
     const findPriceTodosDescuento = (margen, itemSku, iva) => {
         const PreciosTDescuentos = []
@@ -80,9 +76,9 @@ const FuncionesContextProvider = ({ children }) => {
                 const resultado = (productoEncontrado.costo) / (1 - market.value - 0.05 - ((margen / 100) / 0.65)) * iva;
                 const precioT = (Math.floor(resultado / 100) * 100) - 1;
 
-                const precioPromocionT = precioT * (1 + porcentaje)
+                const precioPromocionT = precioT / (1 - porcentaje)
                 const precioTRedondeado = (Math.floor(precioPromocionT / 100) * 100)
-                PreciosTDescuentos.push({ price: precioTRedondeado, name: market.label })
+                PreciosTDescuentos.push({ price: precioTRedondeado, name: market.label, priceD: precioT })
             });
         }
         if (porcentaje > 0) {
@@ -122,7 +118,7 @@ const FuncionesContextProvider = ({ children }) => {
         if (productoEncontrado) {
             const resultado = (productoEncontrado.costo) / (1 - comision - 0.05 - ((margen / 100) / 0.65)) * iva;
             const roundedPrice = (Math.floor(resultado / 100) * 100) - 1;
-            const precioPromocion = roundedPrice * (1 + porcentaje)
+            const precioPromocion = roundedPrice / (1 - porcentaje)
             if (porcentaje > 0) {
                 return (Math.floor(precioPromocion / 100) * 100)
             }
@@ -143,7 +139,8 @@ const FuncionesContextProvider = ({ children }) => {
         findPriceTodosDescuento,
         porcentaje,
         findPriceDescuento,
-        descargarPromocion
+        valoresComisiones
+
 
     };
 

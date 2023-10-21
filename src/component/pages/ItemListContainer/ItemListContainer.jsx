@@ -8,10 +8,16 @@ import { Description, FileDownload } from "@mui/icons-material";
 const ItemListContainer = () => {
     const { handleFileChange, recieveFromPy, productos, selectedFile, numero } = useContext(FuncionesContext);
 
+    const [toggleDescuento, setToggleDescuento] = useState(0);
+
     const [toggle, setToggle] = useState(0)
 
     const descargar = () => {
         setToggle(toggle + 1)
+
+    }
+    const descargarDescuento = () => {
+        setToggleDescuento(toggleDescuento + 1)
 
     }
 
@@ -41,7 +47,6 @@ const ItemListContainer = () => {
 
     const enviarPyTodos = (prodx) => {
         const jsonPy = JSON.stringify(prodx)
-        console.log(jsonPy)
         if (prodx) {
             fetch('https://flask-price-calculator.onrender.com/update_file_all', {
                 method: 'POST',
@@ -61,6 +66,52 @@ const ItemListContainer = () => {
                 });
         }
         setToggle(0)
+    };
+
+    const enviarPyD = (prodx) => {
+        const jsonPy = JSON.stringify(prodx)
+        if (prodx) {
+            fetch('https://flask-price-calculator.onrender.com/update_file_all_discount', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                },
+                body: jsonPy,
+            })
+                .then(response => response.blob())
+                .then(blobData => {
+
+                    saveAs(blobData, 'excel_actualizado.xlsx');
+                })
+                .catch(error => {
+                    console.error('Error en la solicitud:', error);
+                });
+        }
+        setToggleDescuento(0)
+    };
+
+    const enviarPyTodosD = (prodx) => {
+        const jsonPy = JSON.stringify(prodx)
+        if (prodx) {
+            fetch('https://flask-price-calculator.onrender.com/update_file_all_discount', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                },
+                body: jsonPy,
+            })
+                .then(response => response.blob())
+                .then(blobData => {
+
+                    saveAs(blobData, 'excel_actualizado.xlsx');
+                })
+                .catch(error => {
+                    console.error('Error en la solicitud:', error);
+                });
+        }
+        setToggleDescuento(0)
     };
 
     return (
@@ -97,7 +148,15 @@ const ItemListContainer = () => {
                 </div>
 
             </div>
-            <ItemList productos={productos} enviarPy={enviarPy} toggle={toggle} enviarPyTodos={enviarPyTodos} />
+            <ItemList
+                productos={productos}
+                enviarPy={enviarPy}
+                toggle={toggle}
+                enviarPyTodos={enviarPyTodos}
+                enviarPyTodosD={enviarPyTodosD}
+                enviarPyD={enviarPyD}
+                toggleDescuento={toggleDescuento}
+                descargarDescuento={descargarDescuento} />
         </div>
     );
 }
