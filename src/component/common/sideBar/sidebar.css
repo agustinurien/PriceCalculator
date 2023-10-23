@@ -222,3 +222,10 @@
     display: flex;
     justify-content: space-between;
 }
+
+.valorNumerico{
+    background-color: #f0f0f0;
+    color: #ff0000;
+    padding: 10px;
+}
+

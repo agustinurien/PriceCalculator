@@ -33,7 +33,6 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
     const [inputValues, setInputValues] = useState(valoresComisiones.map((element => element.value * 100)))
 
     const [selectedMarkets, setSelectedMarkets] = useState([])
-    console.log(selectedMarkets)
 
     const handleInputChange = (index, newValue) => {
         const numberValue = parseFloat(newValue);
@@ -51,15 +50,18 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
         console.log(inputValues) // hacer un push para cambiar los datos, le paso un numero entero, deberia dividirlo en 100
     }
 
-    const sendValue = (valueMkp, valuePorcentaje) => {
-        console.log(valueMkp)
-        console.log(valuePorcentaje)
+    const [label, setLabel] = useState("")
+    const [valueMkp, setValueMkp] = useState(0)
+    const [newData, setNewData] = useState("")
 
-        // enviar esta info a un array
-    }
-    const agregarMarket = () => {
-        // aca va el array que se forma en sendValue
-        // enviar esta info a la base de datos
+    const saveValue = () => {
+        if (label && !isNaN(valueMkp)) {
+            const newItem = { label: label, value: Number(valueMkp) }
+            setNewData([...newData, newItem])
+            setLabel("")
+            setValueMkp(0)
+        }
+        // enviar la data como json al py
     }
 
     const toggleEliminar = (marketLabel) => {
@@ -97,7 +99,7 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
 
                 <div className="itemsConfig">
                     <section className="acordion">
-                        <button onClick={() => { toggleDesplegar("markets"), setEditar(false) }} className="topic">
+                        <button onClick={() => { toggleDesplegar("markets"), setEditar(false), setAgregar(false) }} className="topic">
                             <h3>Markets</h3>
                             <KeyboardArrowRight className={desplegar.markets && "rotate"} />
                         </button>
@@ -157,7 +159,6 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
                                         })
                                     }
 
-
                                     <section
                                         className={agregar ? "seccionAgregar" : "seccionEditar"}>
                                         {
@@ -165,23 +166,33 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
                                                 <>
                                                     <div className="inputsAgregar">
                                                         <input
-                                                            onChange={(e) => sendValue(e.target.value, e.target.value)}
+                                                            onChange={(e) => setLabel(e.target.value)}
                                                             className="campoMkp" type="text" name="" id="" placeholder="MARKET..." />
                                                         <input
-                                                            onChange={(e) => sendValue(e.target.value, e.target.value)}
+                                                            onChange={(e) => setValueMkp(e.target.value)}
                                                             className="campoComision" type="text" name="" id="" placeholder="%" />
                                                     </div>
+                                                    {
+                                                        isNaN(valueMkp) && (
+                                                            <div className="valorNumerico">
+                                                                <span>*Ingresa un valor numerico</span>
+                                                            </div>
+                                                        )
+                                                    }
                                                     <div className="seccionEditar">
                                                         <button
                                                             className="botonCancelar"
                                                             onClick={() => setAgregar(false)}>CANCELAR</button>
                                                         <button
                                                             className="botonDone"
-                                                            onClick={() => (setAgregar(false), agregarMarket())}><CheckCircleOutline className="check" fontSize="inherit" /></button>
+                                                            disabled={isNaN(valueMkp)}
+                                                            onClick={() => (setAgregar(false), saveValue())}><CheckCircleOutline className="check" fontSize="inherit" /></button>
                                                     </div>
                                                 </>
                                             )
                                         }
+
+
                                         {
                                             editar && (
                                                 <>
@@ -194,6 +205,7 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
                                                 </>
                                             )
                                         }
+
                                         {
                                             editar || agregar === false && (
                                                 <>
@@ -213,9 +225,6 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
                                             )
                                         }
                                     </section>
-
-
-
 
                                 </>
                             )

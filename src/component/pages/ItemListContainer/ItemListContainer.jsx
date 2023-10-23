@@ -70,8 +70,9 @@ const ItemListContainer = () => {
 
     const enviarPyD = (prodx) => {
         const jsonPy = JSON.stringify(prodx)
+
         if (prodx) {
-            fetch('https://flask-price-calculator.onrender.com/update_file_all_discount', {
+            fetch('https://flask-price-calculator.onrender.com/update_file_discount', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -93,6 +94,7 @@ const ItemListContainer = () => {
 
     const enviarPyTodosD = (prodx) => {
         const jsonPy = JSON.stringify(prodx)
+
         if (prodx) {
             fetch('https://flask-price-calculator.onrender.com/update_file_all_discount', {
                 method: 'POST',
@@ -125,7 +127,10 @@ const ItemListContainer = () => {
                         <Description className="iconoMui custom-icon-size" fontSize="larger" />
                         <div className="conBotones">
                             <input type="file" onChange={handleFileChange} />
-                            <button className={!selectedFile ? "disabled" : "subirA"} onClick={recieveFromPy} disabled={!handleFileChange}>Subir</button>
+                            <button
+                                className={!selectedFile ? "disabled" : "subirA"}
+                                onClick={recieveFromPy}
+                                disabled={!handleFileChange}>Subir</button>
                         </div>
                     </div>
 
