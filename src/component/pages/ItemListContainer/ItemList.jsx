@@ -2,7 +2,7 @@ import { ArrowDropDown, ArrowDropUp } from "@mui/icons-material"
 import { useContext, useEffect, useState } from "react"
 import "./itemList.css"
 import { FuncionesContext } from "../../../context/FuncioinesContext";
-import { TextField } from "@mui/material";
+import { CircularProgress, TextField } from "@mui/material";
 
 
 
@@ -15,7 +15,8 @@ const ItemList = ({ productos, enviarPy, toggle, enviarPyTodos, enviarPyD, envia
         findPriceTodos,
         findPriceTodosDescuento,
         porcentaje,
-        findPriceDescuento } = useContext(FuncionesContext);
+        findPriceDescuento,
+        numero } = useContext(FuncionesContext);
 
     const [contadores, setContadores] = useState({});
     const [productosSeleccionados, setProductosSeleccionados] = useState({});
@@ -231,7 +232,7 @@ const ItemList = ({ productos, enviarPy, toggle, enviarPyTodos, enviarPyD, envia
         <>
 
             <section className="todosProductos">
-                {productos.length > 0 && (
+                {productos.length > 0 ? (
                     <div className="botonesMasivos">
                         <div className="sectorDescuento">
                             <TextField className="inputDescuento" label="Promocion" variant="filled" onChange={handleValue} />
@@ -252,7 +253,19 @@ const ItemList = ({ productos, enviarPy, toggle, enviarPyTodos, enviarPyD, envia
                             </div>
                         </div>
                     </div>
-                )}
+                ) : (
+
+                    productos.length === 0 && numero === 1 && (
+                        <div className="cargando">
+                            <CircularProgress />
+                        </div>
+
+                    )
+
+                )
+
+
+                }
 
                 {
                     productos.map((element) => {
