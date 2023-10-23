@@ -89,6 +89,16 @@
     margin: 0px;
     padding: 5px;
 }
+.detallesCostodeEnvio h4{
+    width: fit-content;
+    margin: 0px;
+    padding: 15px;
+}
+
+.detallesCostodeEnvio{
+    
+    background-color: #f1f1f1;
+}
 
 .rotate{
     rotate: 90deg;
@@ -228,4 +238,6 @@
     color: #ff0000;
     padding: 10px;
 }
+
+
 

@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Add, CheckCircleOutline, Close, Create, KeyboardArrowRight, RemoveCircleOutline } from "@mui/icons-material"
 import { motion } from "framer-motion"
 import "./sidebar.css"
+import Swal from "sweetalert2";
+
 
 const Sidebar = ({ sideBar, toggleSidebar }) => {
 
@@ -21,6 +23,35 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
         markets: false,
         costoEnvio: false,
     })
+
+    const handleClickOpen = () => {
+        Swal.fire({
+            title: 'Deseas guardar los cambios?',
+            showCancelButton: true,
+            showDenyButton: false,
+            cancelButtonText: `Cancelar`,
+            confirmButtonText: 'Guardar',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                setAgregar(false)
+                saveValue()
+            }
+        })
+    };
+    const handleChangeValue = () => {
+        Swal.fire({
+            title: 'Deseas guardar los cambios?',
+            showCancelButton: true,
+            showDenyButton: false,
+            cancelButtonText: `Cancelar`,
+            confirmButtonText: 'Guardar',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                setEditar(!editar)
+                changeValue()
+            }
+        })
+    };
 
 
     const toggleDesplegar = (topic) => {
@@ -92,7 +123,7 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
 
                 <div className="contenedorConfiguracion">
                     <h2>Configuracion</h2>
-                    <button className="settingsButton buttonCross" onClick={() => toggleSidebar()}>
+                    <button className="settingsButton buttonCross" onClick={() => (toggleSidebar(), setDesplegar(false))}>
                         <Close className="settings cross" fontSize="inherit" />
                     </button>
                 </div>
@@ -185,8 +216,8 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
                                                             onClick={() => setAgregar(false)}>CANCELAR</button>
                                                         <button
                                                             className="botonDone"
-                                                            disabled={isNaN(valueMkp)}
-                                                            onClick={() => (setAgregar(false), saveValue())}><CheckCircleOutline className="check" fontSize="inherit" /></button>
+                                                            disabled={(isNaN(valueMkp) || valueMkp === 0 || label === "")}
+                                                            onClick={() => (handleClickOpen())}><CheckCircleOutline className="check" fontSize="inherit" /></button>
                                                     </div>
                                                 </>
                                             )
@@ -201,7 +232,7 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
                                                         onClick={() => (setEditar(!editar), cancelarChangeValue(), setSelectedMarkets([]))}>CANCELAR</button>
                                                     <button
                                                         className="botonDone"
-                                                        onClick={() => (setEditar(!editar), changeValue())}><CheckCircleOutline className="check" fontSize="inherit" /></button>
+                                                        onClick={() => (handleChangeValue())}><CheckCircleOutline className="check" fontSize="inherit" /></button>
                                                 </>
                                             )
                                         }
@@ -246,7 +277,7 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
                                             animate={{ height: "auto" }}
                                             exit={{ height: 0, }}
                                             transition={{ duration: 0.2 }}
-                                            className="detalles">
+                                            className="detallesCostodeEnvio">
                                             {
                                                 costosEnvio.length === 0 && (
                                                     <motion.h4
@@ -259,7 +290,7 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
                                         </motion.div>
                                     }
                                     <section
-                                        className="seccionAgregar">
+                                        className="seccionEditar">
                                         <motion.button
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}

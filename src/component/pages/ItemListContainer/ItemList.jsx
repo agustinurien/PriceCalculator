@@ -259,12 +259,8 @@ const ItemList = ({ productos, enviarPy, toggle, enviarPyTodos, enviarPyD, envia
                         <div className="cargando">
                             <CircularProgress />
                         </div>
-
                     )
-
                 )
-
-
                 }
 
                 {
