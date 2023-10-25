@@ -40,10 +40,10 @@ const Navbar = () => {
 
             <div className="nav">
                 <div className="categoria">
-                    <Link to={"/"} className="link-reset">Home</Link>
+                    <Link to={"/"} className="link-reset">Price-Calculator</Link>
                 </div>
                 <div className="categoria">
-                    <Link to={"/DatosMarkets"} className="link-reset">Markets</Link>
+                    <Link to={"/Calculator"} className="link-reset">Calculator</Link>
                 </div>
 
                 <select className="select" onChange={(e) => elegirComision(e.target.value)}>
