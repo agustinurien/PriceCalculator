@@ -6,13 +6,15 @@
     height: 100vh;
     background-color: #2F5E88;
 }
-
+.imagenWorkers{
+    height: 600px;
+}
 .contenidoIngrese{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     background-color: #2F5E88;
-    height: 800px;
+    height: 600px;
     width: auto;
     border-radius: 15px;
     
@@ -21,7 +23,7 @@
     display: flex;
     justify-content: center;
     background-color: #527ea5;
-    height: 70px;
+    height: 50px;
     margin: 0px 30px;
     border: 0px;
     border-bottom: 8px solid#8baecc;
@@ -35,7 +37,7 @@
     padding: 20px;
 }
 .imagenTexto h1{
-    font-size: 90px;
+    font-size: 70px;
     color: #d9e1e7;
     padding: 10px;
     margin: 0px;
@@ -62,17 +64,17 @@
     border: 0px;
     width: 32%;
     color: #ffffff;
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 600;
     padding: 0px;
 }
 .botonesContraseña .continue{
-    padding: 15px;
-    border-radius: 15px;
+    padding: 10px;
+    border-radius: 10px;
     border: 0px;
     width: 40%;
     color: #1d3b55;
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 600;
 }
 .botonesContraseña .arrow{
