@@ -29,6 +29,10 @@
     border-bottom: 8px solid#8baecc;
     font-size: 35px;
     color: white;
+    padding-left: 12px;
+}
+.contenidoIngrese input::placeholder {
+    color: #80a8ca; 
 }
 
 .imagenTexto{

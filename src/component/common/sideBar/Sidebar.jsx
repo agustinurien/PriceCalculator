@@ -9,11 +9,13 @@ import Swal from "sweetalert2";
 
 const Sidebar = ({ sideBar, toggleSidebar }) => {
 
-    const { valoresComisiones } = useContext(FuncionesContext)
+    const { agregarMarkets, nuevosMarkets, editarValores, eliminar } = useContext(FuncionesContext)
 
     const costosEnvio = [
 
     ];
+
+    const [selectedMarkets, setSelectedMarkets] = useState([])
 
     const [editar, setEditar] = useState(false)
 
@@ -49,6 +51,7 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
             if (result.isConfirmed) {
                 setEditar(!editar)
                 changeValue()
+                eliminarMarkets()
             }
         })
     };
@@ -61,9 +64,8 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
         }))
     }
 
-    const [inputValues, setInputValues] = useState(valoresComisiones.map((element => element.value * 100)))
+    const [inputValues, setInputValues] = useState()
 
-    const [selectedMarkets, setSelectedMarkets] = useState([])
 
     const handleInputChange = (index, newValue) => {
         const numberValue = parseFloat(newValue);
@@ -74,25 +76,36 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
     };
 
     const cancelarChangeValue = () => {
-        const valoresOriginales = valoresComisiones.map((element => element.value * 100))
+        const valoresOriginales = nuevosMarkets.map((element => element.value))
         setInputValues(valoresOriginales)
     }
     const changeValue = () => {
-        console.log(inputValues) // hacer un push para cambiar los datos, le paso un numero entero, deberia dividirlo en 100
+        const valoresEditados = []
+        nuevosMarkets.map((element, index) => {
+            valoresEditados.push({ label: element.label, value: inputValues[index] })
+        })
+        editarValores(valoresEditados)
+
+    }
+
+    const eliminarMarkets = () => {
+        const marketEliminar = []
+        selectedMarkets.map((element) => {
+            marketEliminar.push({ label: element })
+        })
+        eliminar(marketEliminar)
     }
 
     const [label, setLabel] = useState("")
     const [valueMkp, setValueMkp] = useState(0)
-    const [newData, setNewData] = useState("")
 
     const saveValue = () => {
         if (label && !isNaN(valueMkp)) {
             const newItem = { label: label, value: Number(valueMkp) }
-            setNewData([...newData, newItem])
-            setLabel("")
-            setValueMkp(0)
+
+            agregarMarkets(newItem)
         }
-        // enviar la data como json al py
+
     }
 
     const toggleEliminar = (marketLabel) => {
@@ -138,11 +151,11 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
                             desplegar.markets && (
                                 <>
                                     {
-                                        valoresComisiones.map((element, index) => {
+                                        nuevosMarkets.map((element, index) => {
                                             const delay = 0.1 * index;
                                             const isSelected = selectedMarkets.includes(element.label)
                                             return (
-                                                <div key={element.label} className={isSelected ? "botonEliminarComisionesRojo" : "botonEliminarComisiones"}>
+                                                <div key={index} className={isSelected ? "botonEliminarComisionesRojo" : "botonEliminarComisiones"}>
                                                     {
                                                         editar && (
                                                             <motion.button
@@ -247,7 +260,7 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
                                                         onClick={() => setAgregar(true)}
                                                         className="agregar"> <Add className="add" fontSize="inherit" />AGREGAR</motion.button>
                                                     <motion.button
-                                                        onClick={() => setEditar(!editar)}
+                                                        onClick={() => (setEditar(!editar), cancelarChangeValue())}
                                                         initial={{ opacity: 0 }}
                                                         animate={{ opacity: 1 }}
                                                         transition={{ duration: 0.3, delay: 0.5 }}
