@@ -6,17 +6,18 @@ import imagenC from "../../../assets/descarga.png"
 import imagenI from "../../../assets/icbc.jpg"
 import imagenP from "../../../assets/provincia.png"
 import imagenV from "../../../assets/4068PME.jpg"
-import imagenOtros from "../../../assets/4068PME.jpg"
+import imagenOtros from "../../../assets/otro.png"
 import { Settings } from "@mui/icons-material"
 import Sidebar from "../../common/sideBar/Sidebar"
 
 
 
 const Navbar = () => {
-    const { elegirComision, market, nuevosMarkets } = useContext(FuncionesContext)
+    const { elegirComision, market, nuevosMarkets, userName } = useContext(FuncionesContext)
     const [img, setImg] = useState(imagenC)
 
     const [sideBar, setSideBar] = useState(false)
+
 
     const toggleSidebar = () => {
         setSideBar(!sideBar)
@@ -36,37 +37,70 @@ const Navbar = () => {
     }, [market])
 
     return (
-        <div
-            className={market === "CIUDAD" || market === "ICBC" || market === "PROVINCIA" || market === "VARIOS" ? market : "OTROS"}>
-            <div className="contenedorImagen">
-                <img src={img} alt="tienda" />
-            </div>
+        <>
 
-            <div className="nav">
-                <div className="categoria">
-                    <Link to={"/"} className="link-reset">Price-Calculator</Link>
+
+            <div
+                className={market === "CIUDAD" || market === "ICBC" || market === "PROVINCIA" || market === "VARIOS" ? market : "OTROS"}>
+                <div className="categoria log">
+
+
+                    <div className="userDetails">
+                        <div className="fotoBlack">
+                        </div>
+                        {
+                            userName ?
+                                <p className="usuario">{userName}</p>
+                                :
+                                <Link to={"/Login"} className="link-reset">Log-in</Link>
+
+                        }
+                    </div>
+
+
                 </div>
-                <div className="categoria">
-                    <Link to={"/Calculator"} className="link-reset">Calculator</Link>
+                <div className="contenedorImagen">
+                    <img src={img} alt="tienda" />
                 </div>
 
-                <select className="select" onChange={(e) => elegirComision(e.target.value)}>
-                    {
-                        nuevosMarkets.map((market, index) => {
-                            return (
-                                <option key={index} value={market.label}>{market.label}</option>
-                            )
-                        })
-                    }
-                    {
-                        nuevosMarkets.length > 0 && <option value="TODOS">TODOS</option>
-                    }
+                <div className="nav">
+                    <div className="categoria">
+                        <Link to={"/"} className="link-reset">Price-Calculator</Link>
+                    </div>
+                    <div className="categoria">
+                        <Link to={"/Calculator"} className="link-reset">Calculator</Link>
+                    </div>
 
-                </select>
-                <button className="settingsButton" onClick={() => { setSideBar(!sideBar) }}><Settings className="settings" fontSize="larger" /></button>
-            </div>
-            <Sidebar sideBar={sideBar} toggleSidebar={toggleSidebar} />
-        </div >
+
+                    <select className="select" onChange={(e) => elegirComision(e.target.value)}>
+                        {
+                            nuevosMarkets.map((market, index) => {
+                                return (
+                                    <option key={index} value={market.label}>{market.label}</option>
+                                )
+                            })
+                        }
+                        {
+                            nuevosMarkets.length > 0 && <option value="TODOS">TODOS</option>
+                        }
+
+                    </select>
+
+                    <button
+                        className="settingsButton"
+                        onClick={() => { setSideBar(!sideBar) }}>
+                        <Settings
+                            className="settings"
+                            fontSize="larger" />
+                    </button>
+
+                    <Sidebar sideBar={sideBar} toggleSidebar={toggleSidebar} />
+
+                </div>
+
+
+            </div >
+        </>
     )
 }
 

@@ -5,6 +5,7 @@ import { dataBase } from "../firebaseConfig";
 
 export const FuncionesContext = createContext();
 
+
 const FuncionesContextProvider = ({ children }) => {
 
     const [productos, setProductos] = useState([])
@@ -15,7 +16,13 @@ const FuncionesContextProvider = ({ children }) => {
     const [comision, setComision] = useState(0)
     const [market, setMarket] = useState("")
 
+    const [userName, setUserName] = useState("")
 
+    const userLogeado = (email) => {
+        setUserName(email)
+
+
+    }
     useEffect(() => {
         let marketsFB = collection(dataBase, "markets")
 
@@ -221,7 +228,10 @@ const FuncionesContextProvider = ({ children }) => {
         agregarMarkets,
         nuevosMarkets,
         editarValores,
-        eliminar
+        eliminar,
+        userLogeado,
+        userName
+
     };
 
     return <FuncionesContext.Provider value={data}> {children} </FuncionesContext.Provider>
