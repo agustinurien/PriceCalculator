@@ -1,18 +1,19 @@
 
 .contenedorImagen{
-    width: 250px;
-    padding-left: 50px;
+    width: 30%;
+    display: flex;
+    justify-content: center;
 }
 
 .contenedorImagen img{
-    width: 100%;
+    width: 40%;
 }
 
 .OTROS{
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    z-index: 100; 
+    
     background-color: rgb(255, 255, 255);
     display: flex;
     justify-content: space-between;
@@ -27,7 +28,7 @@
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    z-index: 100; 
+    
     background-color: rgb(255, 255, 255);
     display: flex;
     justify-content: space-between;
@@ -42,7 +43,7 @@
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    z-index: 100; 
+    
     background-color: rgb(255, 255, 255);
     display: flex;
     justify-content: space-between;
@@ -57,7 +58,7 @@
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    z-index: 100; 
+    
     background-color: rgb(255, 255, 255);
     display: flex;
     justify-content: space-between;
@@ -71,7 +72,7 @@
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    z-index: 100; 
+    
     background-color: rgb(255, 255, 255);
     display: flex;
     justify-content: space-between;
@@ -88,7 +89,9 @@
 }
 
 .nav{
+    width: 30%;
     display: flex;
+    justify-content: end;
     align-items: center;
     gap: 20px;
     margin-right: 50px;
@@ -123,6 +126,7 @@
     background-color: transparent;
     border: 0px;
 }
+
 .settings{
     color: #152D49;
     font-size: 30px;
@@ -130,9 +134,10 @@
 
 .userDetails{
     display:flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 8px;
 }
 .usuario{
     margin: 0px;
@@ -140,6 +145,7 @@
     text-decoration: none;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 700;
+    font-size: 13px;
 }
 
 .fotoBlack{
@@ -152,11 +158,25 @@
 }
 
 .log{
+    width: 30%;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     gap: 20px;
     margin-left: 50px;
+}
+
+.reset{
+    color: rgb(102, 102, 102);
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 900;
+    font-size: 12px;
+}
+
+.Lock {
+    color: #1f1f1f;
+    font-size: 30px;
 }
 
 

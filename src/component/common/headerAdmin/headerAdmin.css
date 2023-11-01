@@ -1,0 +1,21 @@
+.navbarAdmin{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2F5E88;
+    height: 8vh;
+    padding: 50px;
+}
+.tituloAdmin{
+    color: aliceblue;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.home{
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+}

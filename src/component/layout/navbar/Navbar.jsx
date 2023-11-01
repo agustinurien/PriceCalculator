@@ -7,17 +7,27 @@ import imagenI from "../../../assets/icbc.jpg"
 import imagenP from "../../../assets/provincia.png"
 import imagenV from "../../../assets/4068PME.jpg"
 import imagenOtros from "../../../assets/otro.png"
-import { Settings } from "@mui/icons-material"
+import { Lock, Settings } from "@mui/icons-material"
 import Sidebar from "../../common/sideBar/Sidebar"
 
 
 
 const Navbar = () => {
-    const { elegirComision, market, nuevosMarkets, userName } = useContext(FuncionesContext)
+    const { elegirComision, market, nuevosMarkets, userName, users } = useContext(FuncionesContext)
     const [img, setImg] = useState(imagenC)
 
     const [sideBar, setSideBar] = useState(false)
+    const [rol, setRol] = useState("")
 
+
+    useEffect(() => {
+        const usuario = users.find((user) => user.email === userName)
+        if (usuario) {
+            setRol(usuario.rol)
+
+        }
+
+    }, [userName, users])
 
     const toggleSidebar = () => {
         setSideBar(!sideBar)
@@ -52,13 +62,12 @@ const Navbar = () => {
                             userName ?
                                 <p className="usuario">{userName}</p>
                                 :
-                                <Link to={"/Login"} className="link-reset">Log-in</Link>
+                                <Link to={"/Login"} className="reset">Log-in</Link>
 
                         }
                     </div>
-
-
                 </div>
+
                 <div className="contenedorImagen">
                     <img src={img} alt="tienda" />
                 </div>
@@ -70,7 +79,6 @@ const Navbar = () => {
                     <div className="categoria">
                         <Link to={"/Calculator"} className="link-reset">Calculator</Link>
                     </div>
-
 
                     <select className="select" onChange={(e) => elegirComision(e.target.value)}>
                         {
@@ -87,11 +95,22 @@ const Navbar = () => {
                     </select>
 
                     <button
+                        disabled={rol === "user" || rol === ""}
                         className="settingsButton"
                         onClick={() => { setSideBar(!sideBar) }}>
-                        <Settings
-                            className="settings"
-                            fontSize="larger" />
+                        {
+                            rol === "admin" ?
+                                <Settings
+                                    className="settings"
+                                    fontSize="larger" />
+                                :
+                                <Lock
+                                    className="Lock"
+                                    fontSize="smaller" />
+
+                        }
+
+
                     </button>
 
                     <Sidebar sideBar={sideBar} toggleSidebar={toggleSidebar} />

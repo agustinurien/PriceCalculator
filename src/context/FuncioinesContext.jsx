@@ -17,11 +17,19 @@ const FuncionesContextProvider = ({ children }) => {
     const [market, setMarket] = useState("")
 
     const [userName, setUserName] = useState("")
+    const [users, setUsers] = useState([]);
 
     const userLogeado = (email) => {
+        let usuarios = collection(dataBase, "users")
+
+        getDocs(usuarios).then((res) => {
+            let users = res.docs.map(doc => {
+                return { ...doc.data() }
+            })
+            setUsers(users)
+        })
+
         setUserName(email)
-
-
     }
     useEffect(() => {
         let marketsFB = collection(dataBase, "markets")
@@ -230,7 +238,8 @@ const FuncionesContextProvider = ({ children }) => {
         editarValores,
         eliminar,
         userLogeado,
-        userName
+        userName,
+        users
 
     };
 
