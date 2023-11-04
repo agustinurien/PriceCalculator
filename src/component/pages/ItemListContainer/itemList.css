@@ -277,9 +277,12 @@
 }
 
 .inputDescuento{
-    width: 100%;
+    width: 97%;
     border: none;
     padding-left:7px;
+    background-color: rgb(231, 231, 231);
+    height: 40px;
+    border-bottom: 2px solid rgb(156, 156, 156);
 }
 
 .botonesDescuento{

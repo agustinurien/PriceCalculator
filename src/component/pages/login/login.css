@@ -1,0 +1,74 @@
+.contenedorAll{
+    display: flex;
+    height: 90vh;
+    justify-content: center;
+    align-items: start;
+    background-color: #244b6d;
+    padding-top: 10vh;
+}
+.all{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(255, 255, 255);
+
+    width: 30%;
+    padding: 70px 0px;
+    padding-top: 20px;
+    gap: 10px;
+    border-radius: 3px;
+}
+.campos{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+.campos input{
+    margin: 7px;
+    width: 50%;
+    height: 25px;
+    border: 0px;
+    border-bottom: 2px solid #2F5E88;
+}
+.campos button{
+    background-color: #2F5E88;
+    color: white;
+    border: 0px;
+    width: 50%;
+    height: 30px;
+    border-radius: 13px;
+    margin-top: 20px;
+}
+.campos button:hover{
+    background-color: #285074;
+    color: white;
+    border: 0px;
+    width: 50%;
+    height: 30px;
+    border-radius: 13px;
+    margin-top: 20px;
+}
+
+.yaTengoCuenta{
+    border: 0px;
+    color: rgb(116, 116, 116);
+    width: 50%;
+    height: 30px;
+    border-radius: 13px;
+    margin-top: 12px;
+}
+.yaTengoCuenta:hover{
+    border: 0px;
+    background-color: rgb(211, 211, 211);
+    width: 50%;
+    height: 30px;
+    border-radius: 13px;
+}
+
+.tituloIoS{
+    font-family: Arial, Helvetica, sans-serif;
+}

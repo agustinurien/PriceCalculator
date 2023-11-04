@@ -126,7 +126,7 @@
     color: #ffffff;
 }
 .fotoUsuarioNoAccess{
-    color: #000000;
+    color: #3d3d3d;
     font-size: 30px;
 }
 
@@ -145,7 +145,7 @@
     height: 30px;
     width: 30px;
     border-radius: 100%;
-    border:solid 2px #000000;
+    border:solid 2px #a0a0a0;
     background-color: transparent;
 }
 .accessBtnTrue{

@@ -72,6 +72,7 @@ const FuncionesContextProvider = ({ children }) => {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
+                renderizarDeveulta()
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -92,7 +93,7 @@ const FuncionesContextProvider = ({ children }) => {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                renderizarDeveulta()
+
             })
             .catch(error => {
                 console.error('Error:', error);

@@ -121,7 +121,6 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
     }
 
 
-
     return (
         <>
             {
@@ -136,14 +135,14 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
 
                 <div className="contenedorConfiguracion">
                     <h2>Configuracion</h2>
-                    <button className="settingsButton buttonCross" onClick={() => (toggleSidebar(), setDesplegar(false))}>
+                    <button className="settingsButton buttonCross" onClick={() => (toggleSidebar(), setDesplegar(false), setSelectedMarkets([]))}>
                         <Close className="settings cross" fontSize="inherit" />
                     </button>
                 </div>
 
                 <div className="itemsConfig">
                     <section className="acordion">
-                        <button onClick={() => { toggleDesplegar("markets"), setEditar(false), setAgregar(false) }} className="topic">
+                        <button onClick={() => { toggleDesplegar("markets"), setEditar(false), setAgregar(false), setSelectedMarkets([]) }} className="topic">
                             <h3>Markets</h3>
                             <KeyboardArrowRight className={desplegar.markets && "rotate"} />
                         </button>
@@ -183,7 +182,7 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
                                                                         initial={{ opacity: 0 }}
                                                                         animate={{ opacity: 1 }}
                                                                         transition={{ duration: 0.3, delay: delay + 0.2 }}
-                                                                    >%{element.value * 100}</motion.h4>
+                                                                    >{element.value * 100}%</motion.h4>
                                                                 ) : (
                                                                     <input
                                                                         type="number"

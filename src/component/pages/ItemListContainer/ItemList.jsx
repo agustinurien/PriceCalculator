@@ -235,7 +235,7 @@ const ItemList = ({ productos, enviarPy, toggle, enviarPyTodos, enviarPyD, envia
                 {productos.length > 0 ? (
                     <div className="botonesMasivos">
                         <div className="sectorDescuento">
-                            <TextField className="inputDescuento" label="Promocion" variant="filled" onChange={handleValue} />
+                            <input type="number" className="inputDescuento" label="Promocion" placeholder="Promocion..." onChange={handleValue} />
                             <div className="botonesDescuento">
                                 <button
                                     className={value == 0 && "descargarDescuentoDisabled"}

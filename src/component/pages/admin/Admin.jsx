@@ -13,8 +13,8 @@ const Admin = () => {
     const [acces, setAcces] = useState(false)
     const [contraseña, setContraseña] = useState("")
     const [users, setUsers] = useState([]);
-    const [selectedCards, setSelectedCards] = useState([]);
-    console.log(selectedCards)
+    const [nuevosRoles, setNuevosRoles] = useState([]);
+
     const isAccesTrue = () => {
         if (contraseña === "12345") {
 
@@ -30,13 +30,41 @@ const Admin = () => {
         }
     }
 
-    const toggleSelection = (usuario) => {
-        const usuarioEncontrado = selectedCards.find(user => user === usuario)
-        if (!usuarioEncontrado) {
-            setSelectedCards([...selectedCards, usuario]);
-        } else {
-            setSelectedCards(selectedCards.filter(users => users !== usuarioEncontrado));
-        }
+    function toggleUserRole(email) {
+        setUsers(prevUsers => {
+            const updatedUsers = prevUsers.map(user => {
+                if (user.email === email) {
+                    // Cambia el rol del usuario
+                    return { ...user, rol: user.rol === 'admin' ? 'user' : 'admin' };
+                }
+                return user;
+            });
+
+            setNuevosRoles(updatedUsers);
+            return updatedUsers;
+        });
+    }
+
+
+
+    const cambiarRol = () => {
+        console.log(JSON.stringify(nuevosRoles))
+        fetch('https://flask-price-calculator.onrender.com/give_admin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(nuevosRoles)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                console.log("hola");
+            })
+            .catch(error => {
+                console.error('Error:', error);
+
+            });
     }
 
 
@@ -64,23 +92,29 @@ const Admin = () => {
                 </section >
             }
             <HeaderAdmin />
+            <button onClick={() => cambiarRol()}>guardar cambios</button>
             <div className="contenedorTarjeta">
                 {
                     acces &&
 
                     users.map((user, index) => {
-                        const estaSeleccionado = selectedCards.find(persona => persona === user)
-                        return (
-                            <section key={index} className={estaSeleccionado ? "tieneAcceso" : "tarjetaIntegrantes"}>
-                                <div className="detallesMasFoto">
-                                    <AccountCircle fontSize="large" className={estaSeleccionado ? "fotoUsuario" : "fotoUsuarioNoAccess"} />
-                                    <div className="detallesIntegrantes">
-                                        <h3 className={estaSeleccionado ? "selectedH3" : ""}>{user.email}</h3>
-                                        <h4 className={estaSeleccionado ? "selectedH3" : ""}>id</h4>
-                                    </div>
-                                </div>
+                        const esAdmin = user.rol === "admin"
 
-                                <button className={estaSeleccionado ? "accessBtnTrue" : "accessBtn"} onClick={() => toggleSelection(user)}></button>
+
+                        return (
+                            <section key={index}>
+                                <section className={esAdmin ? "tieneAcceso" : "tarjetaIntegrantes"}>
+                                    <div className="detallesMasFoto">
+
+                                        <AccountCircle style={{ fontSize: '70px' }} className={esAdmin ? "fotoUsuario" : "fotoUsuarioNoAccess"} />
+                                        <div className="detallesIntegrantes">
+                                            <h3 className={esAdmin ? "selectedH3" : ""}>{user.email}</h3>
+                                            <h4 className={esAdmin ? "selectedH3" : ""}>id</h4>
+                                        </div>
+                                    </div>
+
+                                    <button className={esAdmin ? "accessBtnTrue" : "accessBtn"} onClick={() => (toggleUserRole(user.email))}></button>
+                                </section>
                             </section>
                         )
 

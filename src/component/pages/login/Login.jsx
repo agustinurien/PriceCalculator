@@ -6,6 +6,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { FuncionesContext } from "../../../context/FuncioinesContext";
+import "../login/login.css"
 
 
 
@@ -20,6 +21,7 @@ const Login = () => {
     const [registrado, setRegistrado] = useState(false)
     const [yaExiste, setYaExiste] = useState(false)
     const [noEstaRegistrado, setNoEstaRegistrado] = useState(false)
+    const [completa, setCompleta] = useState(false)
 
     async function registrarUsuario(email, password) {
         const infoUsuario = await createUserWithEmailAndPassword(auth, email, password)
@@ -45,11 +47,16 @@ const Login = () => {
         const email = e.target.elements.email.value
         const password = e.target.elements.password.value
 
+
+
         if (registrado === false) {
             registrarUsuario(email, password)
         } else if (registrado) {
             logear(email, password)
         }
+
+
+
     }
 
     const logear = async (email, password) => {
@@ -67,37 +74,41 @@ const Login = () => {
     }
 
     return (
-        <>
-            <div>
-                <h2>Iniciar sesión</h2>
+        <section className="contenedorAll">
+            <div className="all">
                 {
-                    yaExiste && <span>ya hay una cuenta con este mail</span>
+                    registrado ? <h2 className="tituloIoS">Iniciar sesión</h2> : <h2 className="tituloIoS">Registrate</h2>
 
                 }
                 {
-                    noEstaRegistrado && <span>Este email no esta registrado</span>
+                    yaExiste && <span>Ya hay una cuenta con este mail</span>
+
                 }
-                <form onSubmit={handleSubmit}>
+                {
+                    noEstaRegistrado && <span>Contraseña o email incorrecto</span>
+                }
+                <form className="campos" onSubmit={handleSubmit}>
                     <input
                         type="email"
                         placeholder="Correo electrónico"
                         id="email" />
+
                     <input
                         type="password"
                         placeholder="Contraseña"
                         id="password" />
                     {
-                        registrado ? <button type="submit">Log-in</button> :
-                            <button type="submit">Register</button>
+                        registrado ? <button disabled={completa === true} type="submit">Log-in</button> :
+                            <button disabled={completa === true} type="submit">Continuar</button>
                     }
                 </form>
 
                 {
-                    registrado ? <button onClick={() => setRegistrado(false)}>Registrarme</button> : <button onClick={() => setRegistrado(true)}>Ya tengo una cuenta</button>
+                    registrado ? <button className="yaTengoCuenta" onClick={() => setRegistrado(false)}>Registrarme</button> : <button className="yaTengoCuenta" onClick={() => setRegistrado(true)}>Ya tengo una cuenta</button>
                 }
             </div>
 
-        </>
+        </section>
     )
 }
 
