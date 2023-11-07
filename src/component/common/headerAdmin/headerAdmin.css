@@ -19,3 +19,15 @@
     display: flex;
     align-items: center;
 }
+.linkSave{
+    display: flex;
+    gap: 20px;
+}
+.linkSave button{
+    background-color: #2F5E88;
+    border: 0px;
+    padding: 7px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+}

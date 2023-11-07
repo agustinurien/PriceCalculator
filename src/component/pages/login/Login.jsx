@@ -21,7 +21,6 @@ const Login = () => {
     const [registrado, setRegistrado] = useState(false)
     const [yaExiste, setYaExiste] = useState(false)
     const [noEstaRegistrado, setNoEstaRegistrado] = useState(false)
-    const [completa, setCompleta] = useState(false)
 
     async function registrarUsuario(email, password) {
         const infoUsuario = await createUserWithEmailAndPassword(auth, email, password)
@@ -77,16 +76,29 @@ const Login = () => {
         <section className="contenedorAll">
             <div className="all">
                 {
-                    registrado ? <h2 className="tituloIoS">Iniciar sesión</h2> : <h2 className="tituloIoS">Registrate</h2>
+                    registrado ? (
+                        <>
+                            <h2 className="tituloIoS">Iniciar sesión</h2>
+                            {
+                                noEstaRegistrado &&
+                                <span style={{ color: "red" }}>Contraseña o email incorrecto</span>
+                            }
+                        </>
 
-                }
-                {
-                    yaExiste && <span>Ya hay una cuenta con este mail</span>
+                    )
+                        :
+                        (
+                            <>
+                                <h2 className="tituloIoS">Registrate</h2>
+                                {
+                                    yaExiste &&
+                                    <span style={{ color: "red" }}>Este email esta registrado</span>
 
+                                }
+                            </>
+                        )
                 }
-                {
-                    noEstaRegistrado && <span>Contraseña o email incorrecto</span>
-                }
+
                 <form className="campos" onSubmit={handleSubmit}>
                     <input
                         type="email"
@@ -98,8 +110,8 @@ const Login = () => {
                         placeholder="Contraseña"
                         id="password" />
                     {
-                        registrado ? <button disabled={completa === true} type="submit">Log-in</button> :
-                            <button disabled={completa === true} type="submit">Continuar</button>
+                        registrado ? <button type="submit">Log-in</button> :
+                            <button type="submit">Continuar</button>
                     }
                 </form>
 

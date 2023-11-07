@@ -79,6 +79,8 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
         const valoresOriginales = nuevosMarkets.map((element => element.value))
         setInputValues(valoresOriginales)
     }
+
+
     const changeValue = () => {
         const valoresEditados = []
         nuevosMarkets.map((element, index) => {
@@ -94,6 +96,7 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
             marketEliminar.push({ label: element })
         })
         eliminar(marketEliminar)
+        setSelectedMarkets([])
     }
 
     const [label, setLabel] = useState("")

@@ -31,6 +31,7 @@ const FuncionesContextProvider = ({ children }) => {
 
         setUserName(email)
     }
+
     useEffect(() => {
         let marketsFB = collection(dataBase, "markets")
 
@@ -46,6 +47,7 @@ const FuncionesContextProvider = ({ children }) => {
 
     }, []);
 
+
     const renderizarDeveulta = () => {
         let marketsFB = collection(dataBase, "markets")
 
@@ -54,52 +56,53 @@ const FuncionesContextProvider = ({ children }) => {
                 return { ...doc.data() }
             })
             setNuevosMarkets(productos)
+
             if (market !== "TODOS") {
-                const comisionMkp = productos.find((e) => e.label === market)
-                setComision(comisionMkp.value)
+                setMarket(productos[0].label)
+                setComision(productos[0].value)
             }
         })
     }
 
-    const eliminar = (markets) => {
-        fetch('https://flask-price-calculator.onrender.com/remove_market', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(markets)
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                renderizarDeveulta()
-            })
-            .catch(error => {
-                console.error('Error:', error);
 
-            });
+    const eliminar = async (markets) => {
+        if (markets) {
+
+            try {
+                await fetch('https://flask-price-calculator.onrender.com/remove_market', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(markets)
+                });
+
+                await renderizarDeveulta();
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
     }
 
+    const editarValores = async (comisiones) => {
+        if (comisiones) {
 
-    const editarValores = (comisiones) => {
+            try {
+                await fetch('https://flask-price-calculator.onrender.com/update_comision', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(comisiones)
+                });
 
-        fetch('https://flask-price-calculator.onrender.com/update_comision', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(comisiones)
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-
-            })
-            .catch(error => {
+                await renderizarDeveulta();
+            } catch (error) {
                 console.error('Error:', error);
-
-            });
+            }
+        }
     }
+
 
     const agregarMarkets = (marketNuevo) => {
 
@@ -241,6 +244,7 @@ const FuncionesContextProvider = ({ children }) => {
         userLogeado,
         userName,
         users
+
 
     };
 
