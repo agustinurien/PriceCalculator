@@ -66,6 +66,7 @@ const FuncionesContextProvider = ({ children }) => {
 
 
     const eliminar = async (markets) => {
+        console.log(JSON.stringify(markets))
         if (markets) {
 
             try {

@@ -16,6 +16,7 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
     ];
 
     const [selectedMarkets, setSelectedMarkets] = useState([])
+    console.log(selectedMarkets)
 
     const [editar, setEditar] = useState(false)
 
@@ -76,7 +77,7 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
     };
 
     const cancelarChangeValue = () => {
-        const valoresOriginales = nuevosMarkets.map((element => element.value))
+        const valoresOriginales = nuevosMarkets.map((element => (element.value * 100)))
         setInputValues(valoresOriginales)
     }
 
@@ -84,7 +85,7 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
     const changeValue = () => {
         const valoresEditados = []
         nuevosMarkets.map((element, index) => {
-            valoresEditados.push({ label: element.label, value: inputValues[index] })
+            valoresEditados.push({ label: element.label, value: (inputValues[index] / 100) })
         })
         editarValores(valoresEditados)
 
@@ -102,9 +103,10 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
     const [label, setLabel] = useState("")
     const [valueMkp, setValueMkp] = useState(0)
 
+
     const saveValue = () => {
         if (label && !isNaN(valueMkp)) {
-            const newItem = { label: label, value: Number(valueMkp) }
+            const newItem = { label: label, value: (valueMkp / 100) }
 
             agregarMarkets(newItem)
         }

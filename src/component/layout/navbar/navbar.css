@@ -179,4 +179,24 @@
     font-size: 30px;
 }
 
+.logOut{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    width: 150px;
+}
+.botonLog{
+    margin-top: 2px;
+    padding: 0px;
+    background-color: transparent;
+    border: 0px;
+    width: 70%;
+    color: grey;
+    
+    font-size: 12px;
+}
+.botonLog:hover{
+    color: rgb(31, 31, 31);
+}
+
 

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import "./navbar.css"
 import { useContext, useEffect, useState } from "react"
 import { FuncionesContext } from "../../../context/FuncioinesContext"
@@ -16,18 +16,30 @@ const Navbar = () => {
     const { elegirComision, market, nuevosMarkets, userName, users } = useContext(FuncionesContext)
     const [img, setImg] = useState(imagenC)
 
+    const navigate = useNavigate()
+
     const [sideBar, setSideBar] = useState(false)
     const [rol, setRol] = useState("")
+    const [email, setEmail] = useState("")
 
 
     useEffect(() => {
-        const usuario = users.find((user) => user.email === userName)
-        if (usuario) {
-            setRol(usuario.rol)
+        const storedRol = localStorage.getItem("userRol");
+        const storedEmail = localStorage.getItem("userEmail");
 
+        if (storedRol && storedEmail) {
+            setRol(storedRol);
+            setEmail(storedEmail)
+        } else {
+            const usuario = users.find((user) => user.email === userName);
+            if (usuario) {
+                setRol(usuario.rol);
+                setEmail(usuario.email);
+                localStorage.setItem("userRol", usuario.rol);
+                localStorage.setItem("userEmail", usuario.email);
+            }
         }
-
-    }, [userName, users])
+    }, [userName, users]);
 
     const toggleSidebar = () => {
         setSideBar(!sideBar)
@@ -46,6 +58,13 @@ const Navbar = () => {
         }
     }, [market])
 
+    const handleClearStorage = () => {
+        localStorage.clear();
+        navigate("/");
+        setRol("")
+        setEmail("")
+    };
+
     return (
         <>
 
@@ -59,8 +78,15 @@ const Navbar = () => {
                         <div className="fotoBlack">
                         </div>
                         {
-                            userName ?
-                                <p className="usuario">{userName}</p>
+                            email ?
+                                <div>
+
+                                    <span className="usuario">{email}</span>
+                                    <div className="logOut">
+
+                                        <button className="botonLog" onClick={() => { handleClearStorage() }}>Log-out</button>
+                                    </div>
+                                </div>
                                 :
                                 <Link to={"/Login"} className="reset">Log-in</Link>
 
