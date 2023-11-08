@@ -16,7 +16,6 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
     ];
 
     const [selectedMarkets, setSelectedMarkets] = useState([])
-    console.log(selectedMarkets)
 
     const [editar, setEditar] = useState(false)
 
@@ -93,8 +92,9 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
 
     const eliminarMarkets = () => {
         const marketEliminar = []
+        console.log(marketEliminar)
         selectedMarkets.map((element) => {
-            marketEliminar.push({ label: element })
+            marketEliminar.push({ label: element.label, value: element.value })
         })
         eliminar(marketEliminar)
         setSelectedMarkets([])
@@ -113,15 +113,15 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
 
     }
 
-    const toggleEliminar = (marketLabel) => {
-        const marketEncontrado = selectedMarkets.find((element) => element === marketLabel)
+    const toggleEliminar = (market) => {
+        const marketEncontrado = selectedMarkets.find((element) => element === market)
 
         if (marketEncontrado !== undefined) {
             const nuevoArray = selectedMarkets.filter((element) => element !== marketEncontrado);
             setSelectedMarkets(nuevoArray);
         }
         if (!marketEncontrado) {
-            setSelectedMarkets([...selectedMarkets, marketLabel]);
+            setSelectedMarkets([...selectedMarkets, market]);
         }
     }
 
@@ -157,13 +157,13 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
                                     {
                                         nuevosMarkets.map((element, index) => {
                                             const delay = 0.1 * index;
-                                            const isSelected = selectedMarkets.includes(element.label)
+                                            const isSelected = selectedMarkets.includes(element)
                                             return (
                                                 <div key={index} className={isSelected ? "botonEliminarComisionesRojo" : "botonEliminarComisiones"}>
                                                     {
                                                         editar && (
                                                             <motion.button
-                                                                onClick={() => toggleEliminar(element.label)}
+                                                                onClick={() => toggleEliminar(element)}
                                                                 className="botonEliminar"><RemoveCircleOutline fontSize="inherit" /></motion.button>
                                                         )
                                                     }
