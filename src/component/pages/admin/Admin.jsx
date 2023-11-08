@@ -52,24 +52,24 @@ const Admin = () => {
     }
 
 
+    const cambiarRol = async () => {
+        debugger
+        console.log(JSON.stringify(nuevosRoles))
+        if (nuevosRoles) {
+            try {
+                await fetch('https://flask-price-calculator.onrender.com/changeRole', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(nuevosRoles)
+                });
 
-    const cambiarRol = () => {
-        fetch('https://flask-price-calculator.onrender.com/give_admin', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(nuevosRoles)
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                console.log("hola");
-            })
-            .catch(error => {
+                await console.log("hola")
+            } catch (error) {
                 console.error('Error:', error);
-
-            });
+            }
+        }
     }
 
     const handleSubmit = (e) => {
