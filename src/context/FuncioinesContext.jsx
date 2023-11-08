@@ -64,11 +64,9 @@ const FuncionesContextProvider = ({ children }) => {
         })
     }
 
-
     const eliminar = async (markets) => {
-        debugger
         console.log(JSON.stringify(markets))
-        if (markets) {
+        if (markets.length > 0) {
 
             try {
                 await fetch('https://flask-price-calculator.onrender.com/remove_market', {
