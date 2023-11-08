@@ -1,18 +1,34 @@
 
 .contenedorImagen{
-    width: 250px;
-    padding-left: 50px;
+    width: 30%;
+    display: flex;
+    justify-content: center;
 }
 
 .contenedorImagen img{
-    width: 100%;
+    width: 40%;
+}
+
+.OTROS{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10vh;
+    border-bottom: 10px solid rgb(58, 58, 58);
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .CIUDAD{
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    z-index: 100; 
+    
     background-color: rgb(255, 255, 255);
     display: flex;
     justify-content: space-between;
@@ -27,7 +43,7 @@
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    z-index: 100; 
+    
     background-color: rgb(255, 255, 255);
     display: flex;
     justify-content: space-between;
@@ -42,7 +58,7 @@
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    z-index: 100; 
+    
     background-color: rgb(255, 255, 255);
     display: flex;
     justify-content: space-between;
@@ -56,7 +72,7 @@
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    z-index: 100; 
+    
     background-color: rgb(255, 255, 255);
     display: flex;
     justify-content: space-between;
@@ -73,11 +89,12 @@
 }
 
 .nav{
+    width: 30%;
     display: flex;
+    justify-content: end;
     align-items: center;
     gap: 20px;
-    padding-right: 50px;
-    
+    margin-right: 50px;
 }
 
 .link-reset{
@@ -109,11 +126,77 @@
     background-color: transparent;
     border: 0px;
 }
+
 .settings{
     color: #152D49;
     font-size: 30px;
 }
 
+.userDetails{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+.usuario{
+    margin: 0px;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+}
 
+.fotoBlack{
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    border: solid 1px rgb(194, 194, 194);
+    background-image: url(../../../assets/userblack.png);
+    background-size: cover;
+}
+
+.log{
+    width: 30%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 20px;
+    margin-left: 50px;
+}
+
+.reset{
+    color: rgb(102, 102, 102);
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 900;
+    font-size: 12px;
+}
+
+.Lock {
+    color: #1f1f1f;
+    font-size: 30px;
+}
+
+.logOut{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    width: 150px;
+}
+.botonLog{
+    margin-top: 2px;
+    padding: 0px;
+    background-color: transparent;
+    border: 0px;
+    width: 70%;
+    color: grey;
+    
+    font-size: 12px;
+}
+.botonLog:hover{
+    color: rgb(31, 31, 31);
+}
 
 

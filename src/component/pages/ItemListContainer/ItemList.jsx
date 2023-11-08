@@ -2,7 +2,7 @@ import { ArrowDropDown, ArrowDropUp } from "@mui/icons-material"
 import { useContext, useEffect, useState } from "react"
 import "./itemList.css"
 import { FuncionesContext } from "../../../context/FuncioinesContext";
-import { CircularProgress, TextField } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 
 
 
@@ -235,7 +235,7 @@ const ItemList = ({ productos, enviarPy, toggle, enviarPyTodos, enviarPyD, envia
                 {productos.length > 0 ? (
                     <div className="botonesMasivos">
                         <div className="sectorDescuento">
-                            <TextField className="inputDescuento" label="Promocion" variant="filled" onChange={handleValue} />
+                            <input type="number" className="inputDescuento" label="Promocion" placeholder="Promocion..." onChange={handleValue} />
                             <div className="botonesDescuento">
                                 <button
                                     className={value == 0 && "descargarDescuentoDisabled"}

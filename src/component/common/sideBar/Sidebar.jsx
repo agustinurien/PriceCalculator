@@ -9,11 +9,13 @@ import Swal from "sweetalert2";
 
 const Sidebar = ({ sideBar, toggleSidebar }) => {
 
-    const { valoresComisiones } = useContext(FuncionesContext)
+    const { agregarMarkets, nuevosMarkets, editarValores, eliminar } = useContext(FuncionesContext)
 
     const costosEnvio = [
 
     ];
+
+    const [selectedMarkets, setSelectedMarkets] = useState([])
 
     const [editar, setEditar] = useState(false)
 
@@ -49,6 +51,7 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
             if (result.isConfirmed) {
                 setEditar(!editar)
                 changeValue()
+                eliminarMarkets()
             }
         })
     };
@@ -61,9 +64,8 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
         }))
     }
 
-    const [inputValues, setInputValues] = useState(valoresComisiones.map((element => element.value * 100)))
+    const [inputValues, setInputValues] = useState()
 
-    const [selectedMarkets, setSelectedMarkets] = useState([])
 
     const handleInputChange = (index, newValue) => {
         const numberValue = parseFloat(newValue);
@@ -74,39 +76,54 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
     };
 
     const cancelarChangeValue = () => {
-        const valoresOriginales = valoresComisiones.map((element => element.value * 100))
+        const valoresOriginales = nuevosMarkets.map((element => (element.value * 100)))
         setInputValues(valoresOriginales)
     }
+
+
     const changeValue = () => {
-        console.log(inputValues) // hacer un push para cambiar los datos, le paso un numero entero, deberia dividirlo en 100
+        const valoresEditados = []
+        nuevosMarkets.map((element, index) => {
+            valoresEditados.push({ label: element.label, value: (inputValues[index] / 100) })
+        })
+        editarValores(valoresEditados)
+
+    }
+
+    const eliminarMarkets = () => {
+        const marketEliminar = []
+        console.log(marketEliminar)
+        selectedMarkets.map((element) => {
+            marketEliminar.push({ label: element.label, value: element.value })
+        })
+        eliminar(marketEliminar)
+        setSelectedMarkets([])
     }
 
     const [label, setLabel] = useState("")
     const [valueMkp, setValueMkp] = useState(0)
-    const [newData, setNewData] = useState("")
+
 
     const saveValue = () => {
         if (label && !isNaN(valueMkp)) {
-            const newItem = { label: label, value: Number(valueMkp) }
-            setNewData([...newData, newItem])
-            setLabel("")
-            setValueMkp(0)
+            const newItem = { label: label, value: (valueMkp / 100) }
+
+            agregarMarkets(newItem)
         }
-        // enviar la data como json al py
+
     }
 
-    const toggleEliminar = (marketLabel) => {
-        const marketEncontrado = selectedMarkets.find((element) => element === marketLabel)
+    const toggleEliminar = (market) => {
+        const marketEncontrado = selectedMarkets.find((element) => element === market)
 
         if (marketEncontrado !== undefined) {
             const nuevoArray = selectedMarkets.filter((element) => element !== marketEncontrado);
             setSelectedMarkets(nuevoArray);
         }
         if (!marketEncontrado) {
-            setSelectedMarkets([...selectedMarkets, marketLabel]);
+            setSelectedMarkets([...selectedMarkets, market]);
         }
     }
-
 
 
     return (
@@ -123,14 +140,14 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
 
                 <div className="contenedorConfiguracion">
                     <h2>Configuracion</h2>
-                    <button className="settingsButton buttonCross" onClick={() => (toggleSidebar(), setDesplegar(false))}>
+                    <button className="settingsButton buttonCross" onClick={() => (toggleSidebar(), setDesplegar(false), setSelectedMarkets([]))}>
                         <Close className="settings cross" fontSize="inherit" />
                     </button>
                 </div>
 
                 <div className="itemsConfig">
                     <section className="acordion">
-                        <button onClick={() => { toggleDesplegar("markets"), setEditar(false), setAgregar(false) }} className="topic">
+                        <button onClick={() => { toggleDesplegar("markets"), setEditar(false), setAgregar(false), setSelectedMarkets([]) }} className="topic">
                             <h3>Markets</h3>
                             <KeyboardArrowRight className={desplegar.markets && "rotate"} />
                         </button>
@@ -138,15 +155,15 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
                             desplegar.markets && (
                                 <>
                                     {
-                                        valoresComisiones.map((element, index) => {
+                                        nuevosMarkets.map((element, index) => {
                                             const delay = 0.1 * index;
-                                            const isSelected = selectedMarkets.includes(element.label)
+                                            const isSelected = selectedMarkets.includes(element)
                                             return (
-                                                <div key={element.label} className={isSelected ? "botonEliminarComisionesRojo" : "botonEliminarComisiones"}>
+                                                <div key={index} className={isSelected ? "botonEliminarComisionesRojo" : "botonEliminarComisiones"}>
                                                     {
                                                         editar && (
                                                             <motion.button
-                                                                onClick={() => toggleEliminar(element.label)}
+                                                                onClick={() => toggleEliminar(element)}
                                                                 className="botonEliminar"><RemoveCircleOutline fontSize="inherit" /></motion.button>
                                                         )
                                                     }
@@ -170,7 +187,7 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
                                                                         initial={{ opacity: 0 }}
                                                                         animate={{ opacity: 1 }}
                                                                         transition={{ duration: 0.3, delay: delay + 0.2 }}
-                                                                    >%{element.value * 100}</motion.h4>
+                                                                    >{element.value * 100}%</motion.h4>
                                                                 ) : (
                                                                     <input
                                                                         type="number"
@@ -247,7 +264,7 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
                                                         onClick={() => setAgregar(true)}
                                                         className="agregar"> <Add className="add" fontSize="inherit" />AGREGAR</motion.button>
                                                     <motion.button
-                                                        onClick={() => setEditar(!editar)}
+                                                        onClick={() => (setEditar(!editar), cancelarChangeValue())}
                                                         initial={{ opacity: 0 }}
                                                         animate={{ opacity: 1 }}
                                                         transition={{ duration: 0.3, delay: 0.5 }}

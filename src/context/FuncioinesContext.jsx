@@ -1,30 +1,129 @@
-import { createContext, useState } from "react"
+import { collection, getDocs } from "firebase/firestore";
+import { createContext, useEffect, useState } from "react"
+import { dataBase } from "../firebaseConfig";
 
 
 export const FuncionesContext = createContext();
 
+
 const FuncionesContextProvider = ({ children }) => {
 
-    const valoresComisiones = [
-        { label: "CIUDAD", value: 0.20 },
-        { label: "ICBC", value: 0.1509 },
-        { label: "PROVINCIA", value: 0.10 },
-        { label: "VARIOS", value: 0.127 }
-    ];
-
     const [productos, setProductos] = useState([])
-
     const [numero, setNumero] = useState(0)
-
-    const [comision, setComision] = useState(0.20)
-
-    const [market, setMarket] = useState("CIUDAD")
-
     const [selectedFile, setSelectedFile] = useState(null);
-
     const [porcentaje, setPorcentaje] = useState();
+    const [nuevosMarkets, setNuevosMarkets] = useState([]);
+    const [comision, setComision] = useState(0)
+    const [market, setMarket] = useState("")
+
+    const [userName, setUserName] = useState("")
+    const [users, setUsers] = useState([]);
+
+    const userLogeado = (email) => {
+        let usuarios = collection(dataBase, "users")
+
+        getDocs(usuarios).then((res) => {
+            let users = res.docs.map(doc => {
+                return { ...doc.data() }
+            })
+            setUsers(users)
+        })
+
+        setUserName(email)
+    }
+
+    useEffect(() => {
+        let marketsFB = collection(dataBase, "markets")
+
+        getDocs(marketsFB).then((res) => {
+            let productos = res.docs.map(doc => {
+                return { ...doc.data() }
+            })
+            setNuevosMarkets(productos)
+            setComision(productos[0].value);
+            setMarket(productos[0].label)
+
+        })
+
+    }, []);
 
 
+    const renderizarDeveulta = () => {
+        let marketsFB = collection(dataBase, "markets")
+
+        getDocs(marketsFB).then((res) => {
+            let productos = res.docs.map(doc => {
+                return { ...doc.data() }
+            })
+            setNuevosMarkets(productos)
+
+            if (market !== "TODOS") {
+                setMarket(productos[0].label)
+                setComision(productos[0].value)
+            }
+        })
+    }
+
+
+    const eliminar = async (markets) => {
+        debugger
+        console.log(JSON.stringify(markets))
+        if (markets) {
+
+            try {
+                await fetch('https://flask-price-calculator.onrender.com/remove_market', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(markets)
+                });
+
+                await renderizarDeveulta();
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    }
+
+    const editarValores = async (comisiones) => {
+        if (comisiones) {
+
+            try {
+                await fetch('https://flask-price-calculator.onrender.com/update_comision', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(comisiones)
+                });
+
+                await renderizarDeveulta();
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    }
+
+
+    const agregarMarkets = (marketNuevo) => {
+
+        fetch('https://flask-price-calculator.onrender.com/add_market', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(marketNuevo)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                renderizarDeveulta()
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
 
     const aplicarDecuento = (porcentaje) => {
         const porcentajeDecimal = (porcentaje / 100)
@@ -61,7 +160,7 @@ const FuncionesContextProvider = ({ children }) => {
     const elegirComision = (mkp) => {
         setMarket(mkp)
         if (mkp !== "TODOS") {
-            const comisionMkp = valoresComisiones.find((market) => market.label === mkp)
+            const comisionMkp = nuevosMarkets.find((market) => market.label === mkp)
             setComision(comisionMkp.value)
         }
     }
@@ -72,7 +171,7 @@ const FuncionesContextProvider = ({ children }) => {
 
         const productoEncontrado = productos.find((producto) => producto.sku === itemSku)
         if (productoEncontrado) {
-            valoresComisiones.forEach(market => {
+            nuevosMarkets.forEach(market => {
                 const resultado = (productoEncontrado.costo) / (1 - market.value - 0.05 - ((margen / 100) / 0.65)) * iva;
                 const precioT = (Math.floor(resultado / 100) * 100) - 1;
 
@@ -91,7 +190,7 @@ const FuncionesContextProvider = ({ children }) => {
 
         const productoEncontrado = productos.find((producto) => producto.sku === itemSku)
         if (productoEncontrado) {
-            valoresComisiones.forEach(market => {
+            nuevosMarkets.forEach(market => {
                 const resultado = (productoEncontrado.costo) / (1 - market.value - 0.05 - ((margen / 100) / 0.65)) * iva;
                 const precioT = (Math.floor(resultado / 100) * 100) - 1;
 
@@ -125,6 +224,7 @@ const FuncionesContextProvider = ({ children }) => {
         }
     }
 
+
     let data = {
         findPrice,
         elegirComision,
@@ -139,7 +239,13 @@ const FuncionesContextProvider = ({ children }) => {
         findPriceTodosDescuento,
         porcentaje,
         findPriceDescuento,
-        valoresComisiones
+        agregarMarkets,
+        nuevosMarkets,
+        editarValores,
+        eliminar,
+        userLogeado,
+        userName,
+        users
 
 
     };
