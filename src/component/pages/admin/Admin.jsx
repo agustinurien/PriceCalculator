@@ -19,7 +19,7 @@ const Admin = () => {
     const [usuarioLogeado, setUsuarioLogeado] = useState([]);
 
     useEffect(() => {
-        if (usuarioLogeado.email === "agus.urien2@gmail.com") {
+        if (usuarioLogeado.email === "guillermo@north.com.ar") {
 
             let usuarios = collection(dataBase, "users")
 
