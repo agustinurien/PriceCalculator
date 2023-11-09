@@ -241,5 +241,15 @@
     padding: 10px;
 }
 
+.administrar{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 20px;
+}
+.iconoAdmin{
+    color: #152D49;
+    padding-left: 10px;
+}
 
 

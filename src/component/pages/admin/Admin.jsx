@@ -53,8 +53,6 @@ const Admin = () => {
 
 
     const cambiarRol = async () => {
-        debugger
-        console.log(JSON.stringify(nuevosRoles))
         if (nuevosRoles) {
             try {
                 await fetch('https://flask-price-calculator.onrender.com/changeRole', {

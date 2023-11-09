@@ -1,10 +1,11 @@
 import { useContext } from "react";
 import { FuncionesContext } from "../../../context/FuncioinesContext";
 import { useState } from "react";
-import { Add, CheckCircleOutline, Close, Create, KeyboardArrowRight, RemoveCircleOutline } from "@mui/icons-material"
+import { Add, CheckCircleOutline, Close, Create, Group, Groups, KeyboardArrowRight, RemoveCircleOutline } from "@mui/icons-material"
 import { motion } from "framer-motion"
 import "./sidebar.css"
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 
 const Sidebar = ({ sideBar, toggleSidebar }) => {
@@ -320,10 +321,15 @@ const Sidebar = ({ sideBar, toggleSidebar }) => {
                                             transition={{ duration: 0.3, delay: 0.3 }}
                                             className="editar"><Create className="edit" fontSize="inherit" /></motion.button>
                                     </section>
+
                                 </>
                             )
                         }
                     </section>
+
+                </div>
+                <div className="administrar">
+                    <Link to={"/Admin"} className="iconoAdmin"><Groups fontSize="large" /></Link>
                 </div>
             </motion.section >
         </>

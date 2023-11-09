@@ -65,7 +65,7 @@ const FuncionesContextProvider = ({ children }) => {
     }
 
     const eliminar = async (markets) => {
-        console.log(JSON.stringify(markets))
+
         if (markets.length > 0) {
 
             try {
@@ -85,6 +85,7 @@ const FuncionesContextProvider = ({ children }) => {
     }
 
     const editarValores = async (comisiones) => {
+
         if (comisiones) {
 
             try {
